@@ -20,7 +20,6 @@ set_target_properties(bsuir-bug-tracker-app PROPERTIES
 )
 target_include_directories(bsuir-bug-tracker-app PRIVATE ..)
 
-target_sources(bsuir-bug-tracker-app PRIVATE Types.cpp)
-
+add_subdirectory(Types)
 add_subdirectory(Main)
 add_subdirectory(Storage)

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <BsuirBugTracker/Types.h>
+#include "BsuirBugTracker/Types/Types.h"
 #include <BsuirBugTracker/Storage/Attachment.h>
-#include <BsuirBugTracker/Storage/SerializeableList.h>
+#include "BsuirBugTracker/Types/SerializeableList.h"
 
 class Bug
 {
@@ -27,7 +27,11 @@ public:
 
 	[[nodiscard]] const SerializeableList<Attachment>& GetAttachments() const;
 
-	void SetAttachments(const SerializeableList<Attachment>& attachments);
+	void AddAttachment(Attachment NewAttachment);
+
+	void RemoveAllAttachments();
+
+	void RemoveAttachment(const Attachment& Attachment);
 
 	[[nodiscard]] SerializedData Serialize() const;
 

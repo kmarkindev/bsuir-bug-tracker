@@ -4,7 +4,7 @@
 
 String convertFromUtf8(std::string_view utf8String)
 {
-	std::wstring result;
+	String result;
 
 	if (!utf8String.empty())
 	{

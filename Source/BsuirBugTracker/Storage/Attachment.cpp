@@ -9,3 +9,9 @@ void Attachment::DeSerialize(SerializeDataView dataView)
 {
 
 }
+
+Attachment::Attachment(String FilePath)
+	: FilePath(std::move(FilePath))
+{
+
+}

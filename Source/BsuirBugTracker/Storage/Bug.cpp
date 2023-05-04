@@ -45,17 +45,27 @@ const SerializeableList<Attachment>& Bug::GetAttachments() const
 	return Attachments;
 }
 
-void Bug::SetAttachments(const SerializeableList<Attachment>& attachments)
-{
-	Attachments = attachments;
-}
-
 SerializedData Bug::Serialize() const
 {
 	return {};
 }
 
 void Bug::DeSerialize(SerializeDataView dataView)
+{
+
+}
+
+void Bug::AddAttachment(Attachment NewAttachment)
+{
+
+}
+
+void Bug::RemoveAllAttachments()
+{
+
+}
+
+void Bug::RemoveAttachment(const Attachment& Attachment)
 {
 
 }

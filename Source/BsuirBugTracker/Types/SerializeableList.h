@@ -1,8 +1,6 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include <BsuirBugTracker/Types.h>
+#include "BsuirBugTracker/Types/SerializedDataTypes.h"
 
 template<IsSerializeable T>
 class SerializeableList : public std::vector<T>
