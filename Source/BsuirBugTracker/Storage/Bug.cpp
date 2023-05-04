@@ -69,3 +69,14 @@ void Bug::DeSerialize(std::istream& InStream)
 {
 
 }
+
+bool Bug::operator==(const Bug& other) const noexcept
+{
+	return Guid == other.Guid;
+}
+
+Bug::Bug(String Guid, Timestamp CreatedAt, Timestamp UpdatedAt)
+	: Guid(Guid), CreatedAt(CreatedAt), UpdatedAt(UpdatedAt)
+{
+
+}

@@ -9,6 +9,8 @@ class Bug
 
 public:
 
+	Bug(String Guid, Timestamp CreatedAt, Timestamp UpdatedAt);
+
 	[[nodiscard]] const String& GetName() const;
 
 	void SetName(const String& name);
@@ -37,7 +39,11 @@ public:
 
 	void DeSerialize(std::istream& InStream);
 
+	bool operator == (const Bug& other) const noexcept;
+
 private:
+
+	String Guid {};
 
 	String Name {};
 

@@ -15,3 +15,8 @@ void Attachment::DeSerialize(std::istream& InStream)
 {
 
 }
+
+bool Attachment::operator==(const Attachment& other) const noexcept
+{
+	return FilePath == other.FilePath;
+}

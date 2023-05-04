@@ -21,6 +21,8 @@ public:
 
 	void DeSerialize(std::istream& InStream);
 
+	bool operator == (const Attachment& other) const noexcept;
+
 private:
 
 	String FilePath {};
