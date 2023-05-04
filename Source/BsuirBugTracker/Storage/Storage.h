@@ -6,6 +6,8 @@ class Storage
 {
 public:
 
+	void Serialize(std::ostream& OutStream) const;
 
+	void DeSerialize(std::istream& InStream);
 
 };

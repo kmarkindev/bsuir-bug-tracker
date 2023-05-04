@@ -33,9 +33,9 @@ public:
 
 	void RemoveAttachment(const Attachment& Attachment);
 
-	[[nodiscard]] SerializedData Serialize() const;
+	void Serialize(std::ostream& OutStream) const;
 
-	void DeSerialize(SerializeDataView dataView);
+	void DeSerialize(std::istream& InStream);
 
 private:
 

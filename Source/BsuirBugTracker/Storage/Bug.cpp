@@ -45,16 +45,6 @@ const SerializeableList<Attachment>& Bug::GetAttachments() const
 	return Attachments;
 }
 
-SerializedData Bug::Serialize() const
-{
-	return {};
-}
-
-void Bug::DeSerialize(SerializeDataView dataView)
-{
-
-}
-
 void Bug::AddAttachment(Attachment NewAttachment)
 {
 
@@ -66,6 +56,16 @@ void Bug::RemoveAllAttachments()
 }
 
 void Bug::RemoveAttachment(const Attachment& Attachment)
+{
+
+}
+
+void Bug::Serialize(std::ostream& OutStream) const
+{
+
+}
+
+void Bug::DeSerialize(std::istream& InStream)
 {
 
 }

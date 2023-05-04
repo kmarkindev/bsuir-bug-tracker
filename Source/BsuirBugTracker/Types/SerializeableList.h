@@ -7,12 +7,12 @@ class SerializeableList : public std::vector<T>
 {
 public:
 
-	[[nodiscard]] SerializedData Serialize() const
+	void Serialize(std::ostream& OutStream) const
 	{
-		return {};
+
 	}
 
-	void DeSerialize(SerializeDataView SerializeDataView)
+	void DeSerialize(std::istream& InStream)
 	{
 
 	}

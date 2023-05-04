@@ -6,6 +6,8 @@
 #include <type_traits>
 #include <vector>
 #include <stdexcept>
+#include <istream>
+#include <ostream>
 
 #include "SerializedDataTypes.h"
 

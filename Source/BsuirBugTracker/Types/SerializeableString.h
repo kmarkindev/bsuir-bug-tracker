@@ -8,12 +8,12 @@ class SerializeableString : public std::basic_string<T>
 {
 public:
 
-	[[nodiscard]] SerializedData Serialize() const
+	void Serialize(std::ostream& OutStream) const
 	{
-		return {};
+
 	}
 
-	void DeSerialize(SerializeDataView dataView)
+	void DeSerialize(std::istream& InStream)
 	{
 
 	}
@@ -25,12 +25,12 @@ class SerializeableStringView : public std::basic_string_view<T>
 {
 public:
 
-	[[nodiscard]] SerializedData Serialize() const
+	void Serialize(std::ostream& OutStream) const
 	{
-		return {};
+
 	}
 
-	void DeSerialize(SerializeDataView dataView)
+	void DeSerialize(std::istream& InStream)
 	{
 
 	}

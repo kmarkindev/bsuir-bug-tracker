@@ -1,17 +1,17 @@
 #include "Attachment.h"
 
-SerializedData Attachment::Serialize() const
-{
-	return {};
-}
-
-void Attachment::DeSerialize(SerializeDataView dataView)
-{
-
-}
-
 Attachment::Attachment(String FilePath)
 	: FilePath(std::move(FilePath))
+{
+
+}
+
+void Attachment::Serialize(std::ostream& OutStream) const
+{
+
+}
+
+void Attachment::DeSerialize(std::istream& InStream)
 {
 
 }
