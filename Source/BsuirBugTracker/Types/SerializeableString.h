@@ -15,14 +15,28 @@ public:
 	{
 	}
 
+	SerializeableString(const T* const ptr)
+		: std::basic_string<T>(ptr)
+	{
+	}
+
 	void Serialize(std::ostream& OutStream) const
 	{
-
+		std::int64_t size = this->size();
+		OutStream.write(reinterpret_cast<char*>(&size), sizeof(size));
+		OutStream.write(reinterpret_cast<const char*>(this->data()), size * sizeof(T));
 	}
 
 	void DeSerialize(std::istream& InStream)
 	{
+		this->clear();
 
+		std::int64_t size {};
+		InStream.read(reinterpret_cast<char*>(&size), sizeof(size));
+
+		this->resize(size);
+
+		InStream.read(reinterpret_cast<char*>(this->data()), size * sizeof(T));
 	}
 
 };

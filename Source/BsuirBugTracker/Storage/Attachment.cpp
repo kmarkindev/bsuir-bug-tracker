@@ -10,12 +10,12 @@ Attachment::Attachment(String FilePath)
 
 void Attachment::Serialize(std::ostream& OutStream) const
 {
-
+	FilePath.Serialize(OutStream);
 }
 
 void Attachment::DeSerialize(std::istream& InStream)
 {
-
+	FilePath.DeSerialize(InStream);
 }
 
 bool Attachment::operator==(const Attachment& other) const noexcept

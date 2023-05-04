@@ -2,12 +2,12 @@
 
 void Storage::DeSerialize(std::istream& InStream)
 {
-
+	Bugs.DeSerialize(InStream);
 }
 
 void Storage::Serialize(std::ostream& OutStream) const
 {
-
+	Bugs.Serialize(OutStream);
 }
 
 const SerializeableList<Bug>& Storage::GetBugs() const

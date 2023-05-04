@@ -73,12 +73,22 @@ void Bug::RemoveAttachment(const Attachment& Attachment)
 
 void Bug::Serialize(std::ostream& OutStream) const
 {
-
+	Guid.Serialize(OutStream);
+	Name.Serialize(OutStream);
+	Description.Serialize(OutStream);
+	CreatedAt.Serialize(OutStream);
+	UpdatedAt.Serialize(OutStream);
+	Attachments.Serialize(OutStream);
 }
 
 void Bug::DeSerialize(std::istream& InStream)
 {
-
+	Guid.DeSerialize(InStream);
+	Name.DeSerialize(InStream);
+	Description.DeSerialize(InStream);
+	CreatedAt.DeSerialize(InStream);
+	UpdatedAt.DeSerialize(InStream);
+	Attachments.DeSerialize(InStream);
 }
 
 bool Bug::operator==(const Bug& other) const noexcept
