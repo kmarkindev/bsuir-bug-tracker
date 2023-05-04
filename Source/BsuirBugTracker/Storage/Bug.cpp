@@ -47,17 +47,28 @@ const SerializeableList<Attachment>& Bug::GetAttachments() const
 
 void Bug::AddAttachment(Attachment NewAttachment)
 {
-
+	Attachments.emplace_back(std::move(NewAttachment));
 }
 
 void Bug::RemoveAllAttachments()
 {
+	for(auto& Attachment : Attachments)
+	{
+		Attachment.RemoveAttachment();
+	}
 
+	Attachments.clear();
 }
 
 void Bug::RemoveAttachment(const Attachment& Attachment)
 {
+	auto iter = std::find(Attachments.begin(), Attachments.end(), Attachment);
 
+	if(iter != Attachments.end())
+	{
+		iter->RemoveAttachment();
+		Attachments.erase(iter);
+	}
 }
 
 void Bug::Serialize(std::ostream& OutStream) const
@@ -75,8 +86,25 @@ bool Bug::operator==(const Bug& other) const noexcept
 	return Guid == other.Guid;
 }
 
-Bug::Bug(String Guid, Timestamp CreatedAt, Timestamp UpdatedAt)
-	: Guid(Guid), CreatedAt(CreatedAt), UpdatedAt(UpdatedAt)
+const String& Bug::GetGuid() const
+{
+	return Guid;
+}
+
+bool Bug::IsValid() const
+{
+	return !Guid.empty();
+}
+
+Bug::Bug(String Guid)
+	: Guid(std::move(Guid))
 {
 
+}
+
+void Bug::RemoveBug()
+{
+	RemoveAllAttachments();
+
+	Guid.clear();
 }

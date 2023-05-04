@@ -17,15 +17,26 @@ const SerializeableList<Bug>& Storage::GetBugs() const
 
 void Storage::AddBug(Bug NewBug)
 {
-
+	Bugs.emplace_back(std::move(NewBug));
 }
 
 void Storage::RemoveAllBugs()
 {
+	for(auto& Bug : Bugs)
+	{
+		Bug.RemoveBug();
+	}
 
+	Bugs.clear();
 }
 
-void Storage::RemoveBug(Bug bug)
+void Storage::RemoveBug(const Bug& Bug)
 {
+	auto iter = std::find(Bugs.begin(), Bugs.end(), Bug);
 
+	if(iter != Bugs.end())
+	{
+		iter->RemoveBug();
+		Bugs.erase(iter);
+	}
 }

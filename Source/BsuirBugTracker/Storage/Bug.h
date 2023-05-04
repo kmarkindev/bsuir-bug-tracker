@@ -9,7 +9,17 @@ class Bug
 
 public:
 
-	Bug(String Guid, Timestamp CreatedAt, Timestamp UpdatedAt);
+	// Use default constructor to create nullable Bug
+	// Then, you can call DeSerialize to fill it with data
+	Bug() = default;
+
+	// Use this constructor to create new Bug
+	// providing not unique GUID is not safe
+	explicit Bug(String Guid);
+
+	[[nodiscard]] bool IsValid() const;
+
+	[[nodiscard]] const String& GetGuid() const;
 
 	[[nodiscard]] const String& GetName() const;
 
@@ -40,6 +50,11 @@ public:
 	void DeSerialize(std::istream& InStream);
 
 	bool operator == (const Bug& other) const noexcept;
+
+	// Handle removing of a bug
+	// Remove all attachments etc.
+	// Makes it not valid
+	void RemoveBug();
 
 private:
 

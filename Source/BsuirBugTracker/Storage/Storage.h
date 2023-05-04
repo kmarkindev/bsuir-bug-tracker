@@ -15,7 +15,7 @@ public:
 
 	void RemoveAllBugs();
 
-	void RemoveBug(Bug bug);
+	void RemoveBug(const Bug& bug);
 
 	[[nodiscard]] const SerializeableList<Bug>& GetBugs() const;
 

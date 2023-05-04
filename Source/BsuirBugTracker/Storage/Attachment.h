@@ -7,6 +7,12 @@ class Attachment
 
 public:
 
+	// Use it to create nullable Attachment
+	// You can fill it with data using DeSerialize
+	Attachment() = default;
+
+	// Use this constructor to create new Attachment
+	// providing not unique file path is not safe
 	explicit Attachment(String FilePath);
 
 	Attachment(const Attachment&) = delete;
@@ -23,8 +29,17 @@ public:
 
 	bool operator == (const Attachment& other) const noexcept;
 
+	[[nodiscard]] const String& GetFilePath() const;
+
+	// Use it to remove physical file
+	// This call makes Attachment not valid
+	void RemoveAttachment();
+
+	[[nodiscard]] bool IsValid() const;
+
 private:
 
+	// Attachment file path relative to storage folder
 	String FilePath {};
 
 };
