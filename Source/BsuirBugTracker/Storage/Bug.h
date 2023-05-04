@@ -17,6 +17,14 @@ public:
 	// providing not unique GUID is not safe
 	explicit Bug(String Guid);
 
+	Bug& operator = (const Bug&) = delete;
+
+	Bug(const Bug&) = delete;
+
+	Bug(Bug&&) = default;
+
+	Bug& operator = (Bug&&) noexcept = default;
+
 	[[nodiscard]] bool IsValid() const;
 
 	[[nodiscard]] const String& GetGuid() const;

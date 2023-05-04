@@ -19,6 +19,7 @@ set_target_properties(bsuir-bug-tracker-app PROPERTIES
     CXX_STANDARD_REQUIRED TRUE
 )
 target_include_directories(bsuir-bug-tracker-app PRIVATE ..)
+target_link_libraries(bsuir-bug-tracker-app PRIVATE shlwapi)
 
 add_subdirectory(Types)
 add_subdirectory(Main)
