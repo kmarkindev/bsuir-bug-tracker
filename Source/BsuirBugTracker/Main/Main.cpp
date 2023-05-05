@@ -1,35 +1,26 @@
 #include <Windows.h>
-#include <fstream>
+#include <cassert>
+#include <BsuirBugTracker/Windows/MainWindow/MainWindow.h>
 
-#include "BsuirBugTracker/Types/Types.h"
-#include "BsuirBugTracker/Storage/Storage.h"
-
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
+void RunMainLoop()
 {
-	Storage storage {};
+	MSG Message {};
+	BOOL LastGetMessageReturn {};
+	while((LastGetMessageReturn = GetMessage(&Message, nullptr, 0, 0)) != 0)
+	{
+		assert(LastGetMessageReturn != -1);
 
-	Bug bug1 { L"123-456-789" };
-	Bug bug2 { L"abc-def-chg" };
+		TranslateMessage(&Message);
+		DispatchMessage(&Message);
+	}
+}
 
-	bug1.SetUpdatedAt(std::chrono::sys_seconds {std::chrono::sys_days{std::chrono::year_month_day{std::chrono::year{2023}, std::chrono::month{5}, std::chrono::day{4}}}});
-	bug2.SetCreatedAt(std::chrono::seconds{25});
+int WINAPI wWinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PWSTR PCmdLine, int NCmdShow)
+{
+	MainWindow MainWindow {};
+	MainWindow.InitializeWindowInstance(HInstance, WindowInitializeParams {});
 
-	bug2.AddAttachment(Attachment{L"TestFileName.txt"});
+	RunMainLoop();
 
-	storage.AddBug(std::move(bug1));
-	storage.AddBug(std::move(bug2));
-
-	std::ofstream ofstream("output.txt", std::ios::trunc);
-
-	storage.Serialize(ofstream);
-
-	ofstream.close();
-
-	Storage storage2 {};
-
-	std::ifstream ifstream("output.txt");
-
-	storage2.DeSerialize(ifstream);
-
-	return 7788;
+	return 0;
 }
