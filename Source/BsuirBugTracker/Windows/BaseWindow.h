@@ -50,7 +50,7 @@ protected:
 
 	void RegisterWindowClassHelper(WNDPROC WndProc);
 
-	static LRESULT CALLBACK WindowProcedureHelper(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam);
+	static LRESULT CALLBACK WindowProcedureBase(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam);
 
 	virtual void BeginWindowLifetime();
 

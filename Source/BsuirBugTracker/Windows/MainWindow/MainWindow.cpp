@@ -11,18 +11,9 @@ LRESULT MainWindow::WindowProc(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LPara
 			PostQuitMessage(0);
 			break;
 		}
-		case WM_PAINT:
-		{
-			PAINTSTRUCT ps;
-			HDC hdc = BeginPaint(Hwnd, &ps);
-			FillRect(hdc, &ps.rcPaint, reinterpret_cast<HBRUSH>(COLOR_WINDOW+1));
-			EndPaint(Hwnd, &ps);
-
-			break;
-		}
 	}
 
-	return WindowProcedureHelper(Hwnd, UMsg, WParam, LParam);
+	return WindowProcedureBase(Hwnd, UMsg, WParam, LParam);
 }
 
 const wchar_t* MainWindow::GetWindowClassName() const

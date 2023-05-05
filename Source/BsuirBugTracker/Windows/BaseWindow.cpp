@@ -72,8 +72,21 @@ void BaseWindow::DestroyWindowInstance()
 	Hwnd = {};
 }
 
-LRESULT BaseWindow::WindowProcedureHelper(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
+LRESULT BaseWindow::WindowProcedureBase(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
 {
+	switch (UMsg)
+	{
+		case WM_PAINT:
+		{
+			PAINTSTRUCT ps;
+			HDC hdc = BeginPaint(Hwnd, &ps);
+			FillRect(hdc, &ps.rcPaint, reinterpret_cast<HBRUSH>(COLOR_WINDOW+1));
+			EndPaint(Hwnd, &ps);
+
+			break;
+		}
+	}
+
 	return DefWindowProc(Hwnd, UMsg, WParam, LParam);
 }
 
