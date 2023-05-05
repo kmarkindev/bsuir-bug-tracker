@@ -26,6 +26,8 @@ public:
 
 protected:
 
+	void BeginLifetime() override;
+
 	[[nodiscard]] DWORD GetDefaultStyles() const override;
 
 	[[nodiscard]] const wchar_t* GetWindowClassName() const override;

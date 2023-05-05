@@ -37,3 +37,10 @@ bool TextInput::IsReadOnly() const
 {
 	return WindowHasStyle(GetHwnd(), ES_READONLY);
 }
+
+void TextInput::BeginLifetime()
+{
+	BaseWindow::BeginLifetime();
+
+	ReplaceDefaultWindowProcedureWithExisting();
+}
