@@ -52,7 +52,16 @@ void MainWindow::BeginLifetime()
 		.ParentWindow = this,
 	});
 
+	TestTextInput.Initialize(GetHInstance(), WindowInitializeParams {
+		.Name = BSUIR_TEXT("Text Text Text"),
+		.X = 20,
+		.Y = 400,
+		.Width = 250,
+		.Height = 75,
+		.ParentWindow = this,
+	});
 
+	//TestTextInput.SetReadOnly(true);
 }
 
 void MainWindow::EndLifetime()
@@ -62,6 +71,7 @@ void MainWindow::EndLifetime()
 	TestButton.Destroy();
 	TestListView.Destroy();
 	TestText.Destroy();
+	TestTextInput.Destroy();
 }
 
 LRESULT MainWindow::WindowProcedure(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)

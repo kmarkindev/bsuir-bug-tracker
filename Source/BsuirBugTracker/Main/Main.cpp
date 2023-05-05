@@ -29,6 +29,8 @@ int WINAPI wWinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PWSTR PCmdLine
 {
 	RegisterICC();
 
+	LoadLibrary(TEXT("Msftedit.dll"));
+
 	MainWindow MainWindow {};
 	MainWindow.Initialize(HInstance, WindowInitializeParams{
 		.Name = L"Main Window",

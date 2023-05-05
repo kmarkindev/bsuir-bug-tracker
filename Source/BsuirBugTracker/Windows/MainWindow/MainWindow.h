@@ -32,10 +32,12 @@ protected:
 
 private:
 
-	Button TestButton;
+	Button TestButton {};
 
-	Text TestText;
+	Text TestText {};
 
-	ListView TestListView;
+	ListView TestListView {};
+
+	TextInput TestTextInput {};
 
 };
