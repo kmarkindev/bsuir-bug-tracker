@@ -19,6 +19,8 @@ public:
 
 protected:
 
+	LRESULT WindowProcedure(HWND InHwnd, UINT UMsg, WPARAM WParam, LPARAM LParam) override;
+
 	[[nodiscard]] DWORD GetDefaultStyles() const override;
 
 };

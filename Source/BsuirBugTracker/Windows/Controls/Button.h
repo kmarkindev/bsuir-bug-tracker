@@ -25,7 +25,9 @@ public:
 
 protected:
 
-	LRESULT WindowProcedure(HWND InHwnd, UINT UMsg, WPARAM WParam, LPARAM LParam) override;
+	void HandleControlMessage(WORD NotificationCode) override;
+
+	void BeginLifetime() override;
 
 	[[nodiscard]] const wchar_t* GetWindowClassName() const override;
 
@@ -34,5 +36,4 @@ protected:
 private:
 
 	std::function<void(Button&)> Callback {};
-
 };

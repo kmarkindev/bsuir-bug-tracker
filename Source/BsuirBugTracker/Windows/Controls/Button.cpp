@@ -21,16 +21,17 @@ DWORD Button::GetDefaultStyles() const
 	return WS_TABSTOP | WS_CHILD | BS_DEFPUSHBUTTON;
 }
 
-LRESULT Button::WindowProcedure(HWND InHwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
+void Button::BeginLifetime()
 {
-	switch(UMsg)
-	{
-		case WM_COMMAND:
-		{
-			RaiseClickEvent();
-			break;
-		}
-	}
+	ReplaceDefaultWindowProcedure();
+}
 
-	return BaseWindow::WindowProcedure(InHwnd, UMsg, WParam, LParam);
+void Button::HandleControlMessage(WORD NotificationCode)
+{
+	BaseWindow::HandleControlMessage(NotificationCode);
+
+	if(NotificationCode == BN_CLICKED)
+	{
+		RaiseClickEvent();
+	}
 }

@@ -60,14 +60,23 @@ protected:
 
 	virtual void EndLifetime();
 
-private:
+	virtual void HandleControlMessage(WORD NotificationCode);
 
 	static LRESULT CALLBACK WindowProcedureEntry(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam);
+
+	// Use it when you need to wrap already existing windows class
+	// to use its window procedure as a default
+	// and implement events on top of it
+	void ReplaceDefaultWindowProcedure();
+
+private:
 
 	bool WasInitialized = false;
 
 	HWND Hwnd {};
 
 	HINSTANCE HInstance {};
+
+	WNDPROC DefaultWindowProcedure = DefWindowProc;
 
 };
