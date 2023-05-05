@@ -36,6 +36,7 @@ public:
 
 	void Initialize(HINSTANCE InHInstance, const WindowInitializeParams& Params);
 
+	// Note: Make sure to destroy all child windows as well
 	virtual void Destroy();
 
 	[[nodiscard]] bool IsValid() const;

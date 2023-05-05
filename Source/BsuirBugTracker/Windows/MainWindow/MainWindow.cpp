@@ -33,6 +33,8 @@ void MainWindow::BeginLifetime()
 void MainWindow::EndLifetime()
 {
 	BaseWindow::EndLifetime();
+
+	TestButton.Destroy();
 }
 
 LRESULT MainWindow::WindowProcedure(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
