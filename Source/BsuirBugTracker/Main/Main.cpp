@@ -22,5 +22,7 @@ int WINAPI wWinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PWSTR PCmdLine
 
 	RunMainLoop();
 
+	MainWindow.DestroyWindowInstance();
+
 	return 0;
 }

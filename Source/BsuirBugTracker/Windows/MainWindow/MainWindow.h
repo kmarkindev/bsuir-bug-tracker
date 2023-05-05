@@ -20,8 +20,11 @@ protected:
 
 	static LRESULT CALLBACK WindowProc(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam);
 
-	const wchar_t* GetWindowClassName() const override;
+	[[nodiscard]] const wchar_t* GetWindowClassName() const override;
 
-	void RegisterWindowClass(HINSTANCE HInstance) override;
+	void RegisterWindowClass() override;
 
+	void InitWindowLayout() override;
+
+	void DestroyWindowLayout() override;
 };

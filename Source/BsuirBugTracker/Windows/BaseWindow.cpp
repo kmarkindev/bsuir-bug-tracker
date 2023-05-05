@@ -3,9 +3,9 @@
 #include <Windows.h>
 #include <cassert>
 
-void BaseWindow::InitializeWindowInstance(HINSTANCE HInstance, const WindowInitializeParams& Params)
+void BaseWindow::InitializeWindowInstance(HINSTANCE InHInstance, const WindowInitializeParams& Params)
 {
-	HInstance = HInstance;
+	HInstance = InHInstance;
 
 	const wchar_t* ClassName = GetWindowClassName();
 
@@ -15,7 +15,7 @@ void BaseWindow::InitializeWindowInstance(HINSTANCE HInstance, const WindowIniti
 	BOOL ClassInfoExists = GetClassInfoEx(HInstance, ClassName, ClassInfo);
 
 	if(ClassInfoExists == FALSE)
-		RegisterWindowClass(HInstance);
+		RegisterWindowClass();
 
 	DWORD Styles = WS_OVERLAPPEDWINDOW;
 
@@ -36,6 +36,8 @@ void BaseWindow::InitializeWindowInstance(HINSTANCE HInstance, const WindowIniti
 
 	assert(Hwnd != nullptr);
 
+	InitWindowLayout();
+
 	WasInitialized = true;
 }
 
@@ -49,18 +51,21 @@ void BaseWindow::SetVindowVisibility(bool bShowWindow)
 	ShowWindow(Hwnd, bShowWindow ? SW_SHOW : SW_HIDE);
 }
 
-void BaseWindow::RegisterWindowClassHelper(HINSTANCE HInstance, WNDPROC WndProc)
+void BaseWindow::RegisterWindowClassHelper(WNDPROC WndProc)
 {
 	WNDCLASS WindowClass {};
 	WindowClass.lpfnWndProc = WndProc;
 	WindowClass.hInstance = HInstance;
 	WindowClass.lpszClassName = GetWindowClassName();
+	WindowClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
 
 	RegisterClass(&WindowClass);
 }
 
 void BaseWindow::DestroyWindowInstance()
 {
+	DestroyWindowLayout();
+
 	DestroyWindow(Hwnd);
 
 	WasInitialized = false;
@@ -87,4 +92,24 @@ BaseWindow& BaseWindow::operator=(BaseWindow&& other) noexcept
 	SetWindowLongPtr(Hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
 	return *this;
+}
+
+void BaseWindow::InitWindowLayout()
+{
+
+}
+
+void BaseWindow::DestroyWindowLayout()
+{
+
+}
+
+HWND BaseWindow::GetHwnd() const
+{
+	return Hwnd;
+}
+
+HINSTANCE BaseWindow::GetHInstance() const
+{
+	return HInstance;
 }

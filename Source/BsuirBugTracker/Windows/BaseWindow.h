@@ -30,7 +30,7 @@ public:
 
 	BaseWindow& operator = (BaseWindow&& other) noexcept;
 
-	void InitializeWindowInstance(HINSTANCE HInstance, const WindowInitializeParams& Params);
+	void InitializeWindowInstance(HINSTANCE InHInstance, const WindowInitializeParams& Params);
 
 	void DestroyWindowInstance();
 
@@ -38,15 +38,23 @@ public:
 
 	void SetVindowVisibility(bool bShowWindow);
 
+	HWND GetHwnd() const;
+
+	HINSTANCE GetHInstance() const;
+
 protected:
 
 	[[nodiscard]] virtual const wchar_t* GetWindowClassName() const = 0;
 
-	virtual void RegisterWindowClass(HINSTANCE InHInstance) = 0;
+	virtual void RegisterWindowClass() = 0;
 
-	void RegisterWindowClassHelper(HINSTANCE HInstance, WNDPROC WndProc);
+	void RegisterWindowClassHelper(WNDPROC WndProc);
 
 	static LRESULT CALLBACK WindowProcedureHelper(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam);
+
+	virtual void InitWindowLayout();
+
+	virtual void DestroyWindowLayout();
 
 private:
 
