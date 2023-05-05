@@ -1,5 +1,7 @@
 #include "Button.h"
 
+#include <CommCtrl.h>
+
 void Button::RaiseClickEvent()
 {
 	if(Callback)
@@ -13,7 +15,7 @@ void Button::SetOnClickCallback(std::function<void(Button&)> NewCallback)
 
 const wchar_t* Button::GetWindowClassName() const
 {
-	return L"BUTTON";
+	return WC_BUTTON;
 }
 
 DWORD Button::GetDefaultStyles() const
@@ -23,7 +25,7 @@ DWORD Button::GetDefaultStyles() const
 
 void Button::BeginLifetime()
 {
-	ReplaceDefaultWindowProcedure();
+	ReplaceDefaultWindowProcedureWithExisting();
 }
 
 void Button::HandleControlMessage(WORD NotificationCode)

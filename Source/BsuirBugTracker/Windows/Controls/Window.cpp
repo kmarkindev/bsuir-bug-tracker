@@ -15,7 +15,7 @@ LRESULT Window::WindowProcedure(HWND InHwnd, UINT UMsg, WPARAM WParam, LPARAM LP
 		{
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(InHwnd, &ps);
-			FillRect(hdc, &ps.rcPaint, reinterpret_cast<HBRUSH>(COLOR_WINDOW+1));
+			FillRect(hdc, &ps.rcPaint, reinterpret_cast<HBRUSH>(COLOR_WINDOW));
 			EndPaint(InHwnd, &ps);
 
 			break;

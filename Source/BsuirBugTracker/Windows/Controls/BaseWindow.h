@@ -9,13 +9,14 @@ class BaseWindow;
 
 struct WindowInitializeParams
 {
-	String Name { L"No Name"};
+	String Name {};
 	int X = CW_USEDEFAULT;
 	int Y = CW_USEDEFAULT;
 	int Width = CW_USEDEFAULT;
 	int Height = CW_USEDEFAULT;
 	BaseWindow* ParentWindow {};
 	bool InitiallyShown = true;
+	DWORD Styles {};
 };
 
 class BaseWindow
@@ -72,7 +73,7 @@ protected:
 	// Use it when you need to wrap already existing windows class
 	// to use its window procedure as a default
 	// and implement events on top of it
-	void ReplaceDefaultWindowProcedure();
+	void ReplaceDefaultWindowProcedureWithExisting();
 
 private:
 

@@ -53,6 +53,11 @@ public:
 	{
 	}
 
+	SerializeableStringView(const T* ntcts)
+		: std::basic_string_view<T>(ntcts)
+	{
+	}
+
 	void Serialize(std::ostream& OutStream) const
 	{
 

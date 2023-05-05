@@ -22,6 +22,8 @@ protected:
 
 	[[nodiscard]] const wchar_t* GetWindowClassName() const override;
 
+	DWORD GetDefaultStyles() const override;
+
 	void RegisterWindowClass() override;
 
 	void BeginLifetime() override;
@@ -31,5 +33,9 @@ protected:
 private:
 
 	Button TestButton;
+
+	Text TestText;
+
+	ListView TestListView;
 
 };

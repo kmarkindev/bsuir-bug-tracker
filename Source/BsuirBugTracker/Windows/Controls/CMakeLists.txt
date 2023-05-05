@@ -3,4 +3,5 @@ target_sources(bsuir-bug-tracker-app PRIVATE
     Window.cpp
     Button.cpp
     ListView.cpp
+    Text.cpp
 )

@@ -19,7 +19,7 @@ set_target_properties(bsuir-bug-tracker-app PROPERTIES
     CXX_STANDARD_REQUIRED TRUE
 )
 target_include_directories(bsuir-bug-tracker-app PRIVATE ..)
-target_link_libraries(bsuir-bug-tracker-app PRIVATE shlwapi)
+target_link_libraries(bsuir-bug-tracker-app PRIVATE Shlwapi Comctl32.dll)
 
 target_sources(bsuir-bug-tracker-app PRIVATE bsuir-bug-tracker.manifest)
 

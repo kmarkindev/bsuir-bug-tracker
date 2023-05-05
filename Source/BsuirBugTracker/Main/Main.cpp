@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <cassert>
 #include <BsuirBugTracker/Windows/MainWindow/MainWindow.h>
+#include <CommCtrl.h>
 
 void RunMainLoop()
 {
@@ -15,12 +16,24 @@ void RunMainLoop()
 	}
 }
 
+void RegisterICC()
+{
+	INITCOMMONCONTROLSEX InitCommonControlsStruct = {
+			.dwSize = sizeof(InitCommonControlsStruct),
+			.dwICC = ICC_LISTVIEW_CLASSES
+	};
+	InitCommonControlsEx(&InitCommonControlsStruct);
+}
+
 int WINAPI wWinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PWSTR PCmdLine, int NCmdShow)
 {
+	RegisterICC();
+
 	MainWindow MainWindow {};
 	MainWindow.Initialize(HInstance, WindowInitializeParams{
-		.Width = 800,
-		.Height = 600
+		.Name = L"Main Window",
+		.Width = 1200,
+		.Height = 800
 	});
 
 	RunMainLoop();

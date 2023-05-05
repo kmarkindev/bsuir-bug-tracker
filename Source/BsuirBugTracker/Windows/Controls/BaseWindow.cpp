@@ -18,7 +18,7 @@ void BaseWindow::Initialize(HINSTANCE InHInstance, const WindowInitializeParams&
 	if(ClassInfoExists == FALSE)
 		RegisterWindowClass();
 
-	DWORD Styles = GetDefaultStyles();
+	DWORD Styles = Params.Styles | GetDefaultStyles();
 
 	if(Params.InitiallyShown)
 		Styles |= WS_VISIBLE;
@@ -149,7 +149,7 @@ void BaseWindow::RegisterWindowClass()
 
 }
 
-void BaseWindow::ReplaceDefaultWindowProcedure()
+void BaseWindow::ReplaceDefaultWindowProcedureWithExisting()
 {
 	DefaultWindowProcedure = reinterpret_cast<WNDPROC>(GetWindowLongPtr(GetHwnd(), GWLP_WNDPROC));
 
