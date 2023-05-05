@@ -6,6 +6,12 @@
 
 void BaseWindow::Initialize(HINSTANCE InHInstance, const WindowInitializeParams& Params)
 {
+	if(WasInitialized)
+	{
+		assert(false);
+		return;
+	}
+
 	HInstance = InHInstance;
 
 	const wchar_t* ClassName = GetWindowClassName();

@@ -5,4 +5,5 @@ target_sources(bsuir-bug-tracker-app PRIVATE
     ListView.cpp
     Text.cpp
     TextInput.cpp
+    Panel.cpp
 )

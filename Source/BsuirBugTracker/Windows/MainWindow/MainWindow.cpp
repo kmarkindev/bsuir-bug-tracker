@@ -61,7 +61,14 @@ void MainWindow::BeginLifetime()
 		.ParentWindow = this,
 	});
 
-	//TestTextInput.SetReadOnly(true);
+	TestPanel.Initialize(GetHInstance(), WindowInitializeParams {
+		.Name = L"Test Panel",
+		.X = 20,
+		.Y = 500,
+		.Width = 250,
+		.Height = 75,
+		.ParentWindow = this,
+	});
 }
 
 void MainWindow::EndLifetime()
@@ -72,6 +79,7 @@ void MainWindow::EndLifetime()
 	TestListView.Destroy();
 	TestText.Destroy();
 	TestTextInput.Destroy();
+	TestPanel.Destroy();
 }
 
 LRESULT MainWindow::WindowProcedure(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)

@@ -40,4 +40,6 @@ private:
 
 	TextInput TestTextInput {};
 
+	Panel TestPanel {};
+
 };
