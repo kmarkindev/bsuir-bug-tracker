@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 
+
 LRESULT MainWindow::WindowProc(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
 {
 	switch(UMsg)
@@ -30,19 +31,13 @@ void MainWindow::BeginWindowLifetime()
 {
 	BaseWindow::BeginWindowLifetime();
 
-	HWND hwndButton = CreateWindow(
-		L"BUTTON",  // Predefined class; Unicode assumed
-		L"OK",      // Button text
-		WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,  // Styles
-		10,         // x position
-		10,         // y position
-		100,        // Button width
-		100,        // Button height
-		GetHwnd(),     // Parent window
-		nullptr,
-		GetHInstance(),
-		nullptr
-	);
+	TestButton.InitializeButtonInstance(*this, ButtonInitializeParams {
+		.ButtonText = L"My Test Button"
+	});
+
+	TestButton.SetOnClickCallback([](Button&){
+		MessageBox(nullptr, L"Test text after button click", L"Test caption", MB_OK);
+	});
 }
 
 void MainWindow::EndWindowLifetime()

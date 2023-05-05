@@ -18,7 +18,10 @@ void RunMainLoop()
 int WINAPI wWinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PWSTR PCmdLine, int NCmdShow)
 {
 	MainWindow MainWindow {};
-	MainWindow.InitializeWindowInstance(HInstance, WindowInitializeParams {});
+	MainWindow.InitializeWindowInstance(HInstance, WindowInitializeParams {
+		.Width = 800,
+		.Height = 600
+	});
 
 	RunMainLoop();
 

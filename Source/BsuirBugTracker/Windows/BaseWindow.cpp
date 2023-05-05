@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include <cassert>
+#include <BsuirBugTracker/Controls/Controls.h>
 
 void BaseWindow::InitializeWindowInstance(HINSTANCE InHInstance, const WindowInitializeParams& Params)
 {
@@ -31,10 +32,12 @@ void BaseWindow::InitializeWindowInstance(HINSTANCE InHInstance, const WindowIni
 		Params.ParentWindow,
 		nullptr,
 		HInstance,
-		this
+		nullptr
 	);
 
 	assert(Hwnd != nullptr);
+
+	SetWindowLongPtr(Hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
 	BeginWindowLifetime();
 
@@ -82,6 +85,14 @@ LRESULT BaseWindow::WindowProcedureBase(HWND Hwnd, UINT UMsg, WPARAM WParam, LPA
 			HDC hdc = BeginPaint(Hwnd, &ps);
 			FillRect(hdc, &ps.rcPaint, reinterpret_cast<HBRUSH>(COLOR_WINDOW+1));
 			EndPaint(Hwnd, &ps);
+
+			break;
+		}
+		case WM_COMMAND:
+		{
+			HWND ControlHwnd = reinterpret_cast<HWND>(LParam);
+			Button* Button = reinterpret_cast<class Button*>(GetWindowLongPtr(ControlHwnd, GWLP_USERDATA));
+			Button->RaiseClickEvent();
 
 			break;
 		}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <BsuirBugTracker/Windows/BaseWindow.h>
+#include <BsuirBugTracker/Controls/Button.h>
 
 class MainWindow : public BaseWindow
 {
@@ -27,4 +28,9 @@ protected:
 	void BeginWindowLifetime() override;
 
 	void EndWindowLifetime() override;
+
+private:
+
+	Button TestButton;
+
 };
