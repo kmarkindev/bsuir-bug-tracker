@@ -1,9 +1,8 @@
 #pragma once
 
-#include <BsuirBugTracker/Windows/BaseWindow.h>
-#include <BsuirBugTracker/Controls/Button.h>
+#include "BsuirBugTracker/Windows/Controls/Controls.h"
 
-class MainWindow : public BaseWindow
+class MainWindow : public Window
 {
 public:
 
@@ -19,15 +18,15 @@ public:
 
 protected:
 
-	static LRESULT CALLBACK WindowProc(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam);
+	LRESULT WindowProcedure(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam) override;
 
 	[[nodiscard]] const wchar_t* GetWindowClassName() const override;
 
 	void RegisterWindowClass() override;
 
-	void BeginWindowLifetime() override;
+	void BeginLifetime() override;
 
-	void EndWindowLifetime() override;
+	void EndLifetime() override;
 
 private:
 

@@ -1,5 +1,2 @@
 add_subdirectory(MainWindow)
-
-target_sources(bsuir-bug-tracker-app PRIVATE
-    BaseWindow.cpp
-)
+add_subdirectory(Controls)

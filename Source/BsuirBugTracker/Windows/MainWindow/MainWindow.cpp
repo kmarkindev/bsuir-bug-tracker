@@ -2,8 +2,40 @@
 
 #include <Windows.h>
 
+const wchar_t* MainWindow::GetWindowClassName() const
+{
+	return L"Main Window Class";
+}
 
-LRESULT MainWindow::WindowProc(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
+void MainWindow::RegisterWindowClass()
+{
+	RegisterWindowClassHelper();
+}
+
+void MainWindow::BeginLifetime()
+{
+	BaseWindow::BeginLifetime();
+
+	TestButton.Initialize(GetHInstance(), WindowInitializeParams{
+		.Name = L"My Test Button",
+		.X = 20,
+		.Y = 20,
+		.Width = 250,
+		.Height = 150,
+		.ParentWindow = this,
+	});
+
+	TestButton.SetOnClickCallback([](Button& btn){
+		MessageBox(nullptr, L"Test text after button click", L"Test caption", MB_OK);
+	});
+}
+
+void MainWindow::EndLifetime()
+{
+	BaseWindow::EndLifetime();
+}
+
+LRESULT MainWindow::WindowProcedure(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
 {
 	switch(UMsg)
 	{
@@ -14,35 +46,5 @@ LRESULT MainWindow::WindowProc(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LPara
 		}
 	}
 
-	return WindowProcedureBase(Hwnd, UMsg, WParam, LParam);
-}
-
-const wchar_t* MainWindow::GetWindowClassName() const
-{
-	return L"MainWindow Class";
-}
-
-void MainWindow::RegisterWindowClass()
-{
-	RegisterWindowClassHelper(MainWindow::WindowProc);
-}
-
-void MainWindow::BeginWindowLifetime()
-{
-	BaseWindow::BeginWindowLifetime();
-
-	TestButton.InitializeButtonInstance(*this, ButtonInitializeParams {
-		.ButtonText = L"My Test Button"
-	});
-
-	TestButton.SetOnClickCallback([](Button&){
-		MessageBox(nullptr, L"Test text after button click", L"Test caption", MB_OK);
-	});
-}
-
-void MainWindow::EndWindowLifetime()
-{
-	BaseWindow::EndWindowLifetime();
-
-
+	return Window::WindowProcedure(Hwnd, UMsg, WParam, LParam);
 }

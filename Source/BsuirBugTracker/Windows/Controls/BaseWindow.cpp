@@ -2,9 +2,9 @@
 
 #include <Windows.h>
 #include <cassert>
-#include <BsuirBugTracker/Controls/Controls.h>
+#include "WindowHelpers.h"
 
-void BaseWindow::InitializeWindowInstance(HINSTANCE InHInstance, const WindowInitializeParams& Params)
+void BaseWindow::Initialize(HINSTANCE InHInstance, const WindowInitializeParams& Params)
 {
 	HInstance = InHInstance;
 
@@ -18,7 +18,7 @@ void BaseWindow::InitializeWindowInstance(HINSTANCE InHInstance, const WindowIni
 	if(ClassInfoExists == FALSE)
 		RegisterWindowClass();
 
-	DWORD Styles = WS_OVERLAPPEDWINDOW;
+	DWORD Styles = GetDefaultStyles();
 
 	if(Params.InitiallyShown)
 		Styles |= WS_VISIBLE;
@@ -26,10 +26,10 @@ void BaseWindow::InitializeWindowInstance(HINSTANCE InHInstance, const WindowIni
 	Hwnd = CreateWindowEx(
 		0,
 		ClassName,
-		Params.WindowName.c_str(),
+		Params.Name.c_str(),
 		Styles,
 		Params.X, Params.Y, Params.Width, Params.Height,
-		Params.ParentWindow,
+		Params.ParentWindow ? Params.ParentWindow->GetHwnd() : nullptr,
 		nullptr,
 		HInstance,
 		nullptr
@@ -37,9 +37,9 @@ void BaseWindow::InitializeWindowInstance(HINSTANCE InHInstance, const WindowIni
 
 	assert(Hwnd != nullptr);
 
-	SetWindowLongPtr(Hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+	SetWindowInstance(Hwnd, this);
 
-	BeginWindowLifetime();
+	BeginLifetime();
 
 	WasInitialized = true;
 }
@@ -54,10 +54,10 @@ void BaseWindow::SetVindowVisibility(bool bShowWindow)
 	ShowWindow(Hwnd, bShowWindow ? SW_SHOW : SW_HIDE);
 }
 
-void BaseWindow::RegisterWindowClassHelper(WNDPROC WndProc)
+void BaseWindow::RegisterWindowClassHelper()
 {
 	WNDCLASS WindowClass {};
-	WindowClass.lpfnWndProc = WndProc;
+	WindowClass.lpfnWndProc = BaseWindow::WindowProcedureEntry;
 	WindowClass.hInstance = HInstance;
 	WindowClass.lpszClassName = GetWindowClassName();
 	WindowClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
@@ -65,9 +65,19 @@ void BaseWindow::RegisterWindowClassHelper(WNDPROC WndProc)
 	RegisterClass(&WindowClass);
 }
 
-void BaseWindow::DestroyWindowInstance()
+BOOL CALLBACK DestroyChildWindowsCallback(HWND Hwnd, LPARAM LParam)
 {
-	EndWindowLifetime();
+	BaseWindow* WindowInstance = GetWindowInstance(Hwnd);
+	WindowInstance->Destroy();
+
+	return TRUE;
+}
+
+void BaseWindow::Destroy()
+{
+	EndLifetime();
+
+	EnumChildWindows(Hwnd, DestroyChildWindowsCallback, 0);
 
 	DestroyWindow(Hwnd);
 
@@ -75,36 +85,20 @@ void BaseWindow::DestroyWindowInstance()
 	Hwnd = {};
 }
 
-LRESULT BaseWindow::WindowProcedureBase(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
+LRESULT BaseWindow::WindowProcedureEntry(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
 {
-	switch (UMsg)
-	{
-		case WM_PAINT:
-		{
-			PAINTSTRUCT ps;
-			HDC hdc = BeginPaint(Hwnd, &ps);
-			FillRect(hdc, &ps.rcPaint, reinterpret_cast<HBRUSH>(COLOR_WINDOW+1));
-			EndPaint(Hwnd, &ps);
+	BaseWindow* WindowInstance = GetWindowInstance(Hwnd);
 
-			break;
-		}
-		case WM_COMMAND:
-		{
-			HWND ControlHwnd = reinterpret_cast<HWND>(LParam);
-			Button* Button = reinterpret_cast<class Button*>(GetWindowLongPtr(ControlHwnd, GWLP_USERDATA));
-			Button->RaiseClickEvent();
+	if(!WindowInstance)
+		return DefWindowProc(Hwnd, UMsg, WParam, LParam);
 
-			break;
-		}
-	}
-
-	return DefWindowProc(Hwnd, UMsg, WParam, LParam);
+	return WindowInstance->WindowProcedure(Hwnd, UMsg, WParam, LParam);
 }
 
 BaseWindow::BaseWindow(BaseWindow&& other) noexcept
 	: Hwnd(other.Hwnd), HInstance(other.HInstance), WasInitialized(other.WasInitialized)
 {
-	SetWindowLongPtr(Hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+	SetWindowInstance(Hwnd, this);
 }
 
 BaseWindow& BaseWindow::operator=(BaseWindow&& other) noexcept
@@ -113,17 +107,17 @@ BaseWindow& BaseWindow::operator=(BaseWindow&& other) noexcept
 	HInstance = other.HInstance;
 	WasInitialized = other.WasInitialized;
 
-	SetWindowLongPtr(Hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+	SetWindowInstance(Hwnd, this);
 
 	return *this;
 }
 
-void BaseWindow::BeginWindowLifetime()
+void BaseWindow::BeginLifetime()
 {
 
 }
 
-void BaseWindow::EndWindowLifetime()
+void BaseWindow::EndLifetime()
 {
 
 }
@@ -136,4 +130,27 @@ HWND BaseWindow::GetHwnd() const
 HINSTANCE BaseWindow::GetHInstance() const
 {
 	return HInstance;
+}
+
+LRESULT BaseWindow::WindowProcedure(HWND InHwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
+{
+	switch (UMsg)
+	{
+		case WM_PAINT:
+		{
+			PAINTSTRUCT ps;
+			HDC hdc = BeginPaint(InHwnd, &ps);
+			FillRect(hdc, &ps.rcPaint, reinterpret_cast<HBRUSH>(COLOR_WINDOW+1));
+			EndPaint(InHwnd, &ps);
+
+			break;
+		}
+	}
+
+	return DefWindowProc(InHwnd, UMsg, WParam, LParam);
+}
+
+void BaseWindow::RegisterWindowClass()
+{
+
 }

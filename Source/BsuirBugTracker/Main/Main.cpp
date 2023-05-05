@@ -18,14 +18,14 @@ void RunMainLoop()
 int WINAPI wWinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PWSTR PCmdLine, int NCmdShow)
 {
 	MainWindow MainWindow {};
-	MainWindow.InitializeWindowInstance(HInstance, WindowInitializeParams {
-		.Width = 800,
-		.Height = 600
+	MainWindow.Initialize(HInstance, WindowInitializeParams{
+			.Width = 800,
+			.Height = 600
 	});
 
 	RunMainLoop();
 
-	MainWindow.DestroyWindowInstance();
+	MainWindow.Destroy();
 
 	return 0;
 }

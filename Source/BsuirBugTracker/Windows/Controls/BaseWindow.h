@@ -1,0 +1,73 @@
+#pragma once
+
+#include <memory>
+#include <Windows.h>
+#include <cassert>
+#include "BsuirBugTracker/Types/Types.h"
+
+class BaseWindow;
+
+struct WindowInitializeParams
+{
+	String Name { L"No Name"};
+	int X = CW_USEDEFAULT;
+	int Y = CW_USEDEFAULT;
+	int Width = CW_USEDEFAULT;
+	int Height = CW_USEDEFAULT;
+	BaseWindow* ParentWindow {};
+	bool InitiallyShown = true;
+};
+
+class BaseWindow
+{
+public:
+
+	BaseWindow() = default;
+
+	BaseWindow(const BaseWindow&) = delete;
+
+	BaseWindow& operator = (const BaseWindow&) = delete;
+
+	BaseWindow(BaseWindow&& other) noexcept;
+
+	BaseWindow& operator = (BaseWindow&& other) noexcept;
+
+	void Initialize(HINSTANCE InHInstance, const WindowInitializeParams& Params);
+
+	void Destroy();
+
+	[[nodiscard]] bool IsValid() const;
+
+	void SetVindowVisibility(bool bShowWindow);
+
+	[[nodiscard]] HWND GetHwnd() const;
+
+	[[nodiscard]] HINSTANCE GetHInstance() const;
+
+protected:
+
+	virtual LRESULT WindowProcedure(HWND InHwnd, UINT UMsg, WPARAM WParam, LPARAM LParam);
+
+	[[nodiscard]] virtual DWORD GetDefaultStyles() const = 0;
+
+	[[nodiscard]] virtual const wchar_t* GetWindowClassName() const = 0;
+
+	virtual void RegisterWindowClass();
+
+	void RegisterWindowClassHelper();
+
+	virtual void BeginLifetime();
+
+	virtual void EndLifetime();
+
+private:
+
+	static LRESULT CALLBACK WindowProcedureEntry(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam);
+
+	bool WasInitialized = false;
+
+	HWND Hwnd {};
+
+	HINSTANCE HInstance {};
+
+};
