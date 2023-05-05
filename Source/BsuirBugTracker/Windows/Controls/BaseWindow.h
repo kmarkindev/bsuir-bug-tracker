@@ -32,9 +32,11 @@ public:
 
 	BaseWindow& operator = (BaseWindow&& other) noexcept;
 
+	~BaseWindow();
+
 	void Initialize(HINSTANCE InHInstance, const WindowInitializeParams& Params);
 
-	void Destroy();
+	virtual void Destroy();
 
 	[[nodiscard]] bool IsValid() const;
 
@@ -46,6 +48,8 @@ public:
 
 protected:
 
+	// Note: use InHwnd (method argument) instead of Hwnd (class member) since
+	// top level WindowProcedure may call Destroy() and Hwnd is going to be invalid
 	virtual LRESULT WindowProcedure(HWND InHwnd, UINT UMsg, WPARAM WParam, LPARAM LParam);
 
 	[[nodiscard]] virtual DWORD GetDefaultStyles() const = 0;

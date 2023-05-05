@@ -67,17 +67,29 @@ void BaseWindow::RegisterWindowClassHelper()
 
 BOOL CALLBACK DestroyChildWindowsCallback(HWND Hwnd, LPARAM LParam)
 {
-	BaseWindow* WindowInstance = GetWindowInstance(Hwnd);
-	WindowInstance->Destroy();
+	HWND RequiredParent = reinterpret_cast<HWND>(LParam);
+
+	if(GetParent(Hwnd) == RequiredParent)
+	{
+		BaseWindow* WindowInstance = GetWindowInstance(Hwnd);
+		if(WindowInstance)
+			WindowInstance->Destroy();
+	}
 
 	return TRUE;
 }
 
 void BaseWindow::Destroy()
 {
+	if(!WasInitialized)
+	{
+		assert(false);
+		return;
+	}
+
 	EndLifetime();
 
-	EnumChildWindows(Hwnd, DestroyChildWindowsCallback, 0);
+	EnumChildWindows(GetHwnd(), DestroyChildWindowsCallback, reinterpret_cast<LPARAM>(GetHwnd()));
 
 	DestroyWindow(Hwnd);
 
@@ -163,4 +175,12 @@ void BaseWindow::ReplaceDefaultWindowProcedure()
 void BaseWindow::HandleControlMessage(WORD NotificationCode)
 {
 
+}
+
+BaseWindow::~BaseWindow()
+{
+	if(WasInitialized)
+	{
+		assert(false);
+	}
 }

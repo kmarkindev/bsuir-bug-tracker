@@ -25,8 +25,8 @@ void MainWindow::BeginLifetime()
 		.ParentWindow = this,
 	});
 
-	TestButton.SetOnClickCallback([](Button& btn){
-		MessageBox(nullptr, L"Test text after button click", L"Test caption", MB_OK);
+	TestButton.SetOnClickCallback([this](Button& btn){
+		MessageBox(btn.GetHwnd(), L"Test button click", L"Button click", MB_OK);
 	});
 }
 
