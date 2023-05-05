@@ -52,9 +52,9 @@ protected:
 
 	static LRESULT CALLBACK WindowProcedureHelper(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam);
 
-	virtual void InitWindowLayout();
+	virtual void BeginWindowLifetime();
 
-	virtual void DestroyWindowLayout();
+	virtual void EndWindowLifetime();
 
 private:
 

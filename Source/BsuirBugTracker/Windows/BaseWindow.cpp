@@ -36,7 +36,7 @@ void BaseWindow::InitializeWindowInstance(HINSTANCE InHInstance, const WindowIni
 
 	assert(Hwnd != nullptr);
 
-	InitWindowLayout();
+	BeginWindowLifetime();
 
 	WasInitialized = true;
 }
@@ -64,7 +64,7 @@ void BaseWindow::RegisterWindowClassHelper(WNDPROC WndProc)
 
 void BaseWindow::DestroyWindowInstance()
 {
-	DestroyWindowLayout();
+	EndWindowLifetime();
 
 	DestroyWindow(Hwnd);
 
@@ -94,12 +94,12 @@ BaseWindow& BaseWindow::operator=(BaseWindow&& other) noexcept
 	return *this;
 }
 
-void BaseWindow::InitWindowLayout()
+void BaseWindow::BeginWindowLifetime()
 {
 
 }
 
-void BaseWindow::DestroyWindowLayout()
+void BaseWindow::EndWindowLifetime()
 {
 
 }

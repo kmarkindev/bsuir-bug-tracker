@@ -24,7 +24,7 @@ protected:
 
 	void RegisterWindowClass() override;
 
-	void InitWindowLayout() override;
+	void BeginWindowLifetime() override;
 
-	void DestroyWindowLayout() override;
+	void EndWindowLifetime() override;
 };

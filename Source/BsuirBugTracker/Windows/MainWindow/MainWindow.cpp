@@ -15,9 +15,7 @@ LRESULT MainWindow::WindowProc(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LPara
 		{
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(Hwnd, &ps);
-
-			// All painting occurs here, between BeginPaint and EndPaint.
-			FillRect(hdc, &ps.rcPaint, (HBRUSH) (COLOR_WINDOW+1));
+			FillRect(hdc, &ps.rcPaint, reinterpret_cast<HBRUSH>(COLOR_WINDOW+1));
 			EndPaint(Hwnd, &ps);
 
 			break;
@@ -37,9 +35,9 @@ void MainWindow::RegisterWindowClass()
 	RegisterWindowClassHelper(MainWindow::WindowProc);
 }
 
-void MainWindow::InitWindowLayout()
+void MainWindow::BeginWindowLifetime()
 {
-	BaseWindow::InitWindowLayout();
+	BaseWindow::BeginWindowLifetime();
 
 	HWND hwndButton = CreateWindow(
 		L"BUTTON",  // Predefined class; Unicode assumed
@@ -56,9 +54,9 @@ void MainWindow::InitWindowLayout()
 	);
 }
 
-void MainWindow::DestroyWindowLayout()
+void MainWindow::EndWindowLifetime()
 {
-	BaseWindow::DestroyWindowLayout();
+	BaseWindow::EndWindowLifetime();
 
 
 }
