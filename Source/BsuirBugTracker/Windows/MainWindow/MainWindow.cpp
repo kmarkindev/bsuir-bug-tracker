@@ -37,11 +37,13 @@ void MainWindow::BeginLifetime()
 		.ParentWindow = this,
 	});
 
-	TestListView.AddColumn(1, L"Col 1", 100);
-	TestListView.AddColumn(2, L"Col 2", 100);
-	TestListView.AddColumn(3, L"Col 3", 100);
+	TestListView.AddColumn(0, L"Col 1", 100);
+	TestListView.AddColumn(1, L"Col 2", 100);
+	int index = TestListView.AddColumn(55, L"Col 3", 100);
 
-	TestListView.RemoveColumn(0);
+	TestListView.AddItem(0);
+	TestListView.SetItemText(L"Test Item Text1", 0, 0);
+	TestListView.SetItemText(L"Test Item Text2", 0, index);
 
 	TestText.Initialize(GetHInstance(), WindowInitializeParams {
 		.Name = BSUIR_TEXT("Пробный text! @# !@ !%@#^^ qwe123123123"),

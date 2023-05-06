@@ -4,7 +4,7 @@
 
 DWORD ListView::GetDefaultStyles() const
 {
-	return WS_CHILD | LVS_REPORT | LVS_EDITLABELS | WS_BORDER;
+	return WS_CHILD | LVS_REPORT | WS_BORDER;
 }
 
 const wchar_t* ListView::GetWindowClassName() const
@@ -19,17 +19,15 @@ void ListView::BeginLifetime()
 	ReplaceDefaultWindowProcedureWithExisting();
 }
 
-void ListView::AddColumn(int ColumnIndex, StringView ColumnName, int ColumnWidth)
+int ListView::AddColumn(int InsertIndex, StringView ColumnName, int ColumnWidth)
 {
 	LVCOLUMN Lvc = {};
-	Lvc.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	Lvc.iSubItem = ColumnIndex;
+	Lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	Lvc.iSubItem = InsertIndex;
 	Lvc.pszText = const_cast<wchar_t*>(ColumnName.data());
 	Lvc.cx = ColumnWidth;
 
-	auto Result = ListView_InsertColumn(GetHwnd(), ColumnIndex, &Lvc);
-
-	assert(Result != -1);
+	return ListView_InsertColumn(GetHwnd(), InsertIndex, &Lvc);
 }
 
 void ListView::RemoveColumn(int ColumnIndex)
@@ -37,4 +35,23 @@ void ListView::RemoveColumn(int ColumnIndex)
 	auto Result = ListView_DeleteColumn(GetHwnd(), ColumnIndex);
 
 	assert(Result != -1);
+}
+
+void ListView::SetItemText(StringView Text, int ItemIndex, int ColumnIndex)
+{
+	ListView_SetItemText(GetHwnd(), ItemIndex, ColumnIndex, const_cast<wchar_t*>(Text.data()));
+}
+
+int ListView::AddItem(int InsertIndex)
+{
+	LVITEM ItemInfo {};
+	ItemInfo.iItem = InsertIndex;
+	ListView_InsertItem(GetHwnd(), &ItemInfo);
+
+	return ListView_InsertItem(GetHwnd(), &ItemInfo);
+}
+
+void ListView::RemoveItem(int ItemIndex)
+{
+	ListView_DeleteItem(GetHwnd(), ItemIndex);
 }

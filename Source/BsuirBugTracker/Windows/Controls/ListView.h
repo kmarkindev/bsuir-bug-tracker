@@ -3,6 +3,10 @@
 #include <Windows.h>
 #include "BaseWindow.h"
 
+// FIXME: Idk, but ListView may want to control columns and items text memory by itself
+//	It may cause memory errors since ListView will delete someones memory
+//	need to test it and fix
+// FIXME: 2nd+ columns do not allow to select text but 1st does
 class ListView : public BaseWindow
 {
 public:
@@ -17,9 +21,15 @@ public:
 
 	ListView& operator = (ListView&& Other) noexcept = default;
 
-	void AddColumn(int ColumnIndex, StringView ColumnName, int ColumnWidth);
+	int AddColumn(int InsertIndex, StringView ColumnName, int ColumnWidth);
 
 	void RemoveColumn(int ColumnIndex);
+
+	int AddItem(int InsertIndex);
+
+	void RemoveItem(int ItemIndex);
+
+	void SetItemText(StringView Text, int ItemIndex, int ColumnIndex);
 
 protected:
 
