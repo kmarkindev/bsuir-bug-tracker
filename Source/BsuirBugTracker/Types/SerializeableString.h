@@ -15,6 +15,12 @@ public:
 	{
 	}
 
+	explicit SerializeableString(std::basic_string<T> right)
+		: std::basic_string<T>(std::move(right))
+	{
+
+	}
+
 	SerializeableString(const T* const ptr)
 		: std::basic_string<T>(ptr)
 	{

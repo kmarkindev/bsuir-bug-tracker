@@ -26,9 +26,7 @@ void MainWindow::BeginLifetime()
 	});
 
 	TestButton.SetOnClickCallback([this](Button& btn){
-		MessageBox(btn.GetHwnd(), L"Test button click", L"Button click", MB_OK);
-
-		TestComboBox.SetSelectedIndex(-1);
+		MessageBox(btn.GetHwnd(), L"Btn press", L"Button click", MB_OK);
 	});
 
 	TestListView.Initialize(GetHInstance(), WindowInitializeParams{
@@ -84,6 +82,15 @@ void MainWindow::BeginLifetime()
 	TestComboBox.AddItem(L"Test 1");
 	TestComboBox.AddItem(L"Test 2");
 	TestComboBox.AddItem(L"ATest 3");
+
+	TestTimestampPicker.Initialize(GetHInstance(), WindowInitializeParams {
+		.Name = L"Test Timestamp picker",
+		.X = 300,
+		.Y = 600,
+		.Width = 250,
+		.Height = 35,
+		.ParentWindow = this,
+	});
 }
 
 void MainWindow::EndLifetime()
@@ -96,6 +103,7 @@ void MainWindow::EndLifetime()
 	TestTextInput.Destroy();
 	TestPanel.Destroy();
 	TestComboBox.Destroy();
+	TestTimestampPicker.Destroy();
 }
 
 LRESULT MainWindow::WindowProcedure(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)

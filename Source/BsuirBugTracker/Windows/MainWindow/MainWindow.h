@@ -44,4 +44,6 @@ private:
 
 	ComboBox TestComboBox {};
 
+	TimestampPicker TestTimestampPicker {};
+
 };

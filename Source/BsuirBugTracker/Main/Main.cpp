@@ -20,7 +20,7 @@ void RegisterICC()
 {
 	INITCOMMONCONTROLSEX InitCommonControlsStruct = {
 			.dwSize = sizeof(InitCommonControlsStruct),
-			.dwICC = ICC_LISTVIEW_CLASSES
+			.dwICC = ICC_LISTVIEW_CLASSES | ICC_DATE_CLASSES
 	};
 	InitCommonControlsEx(&InitCommonControlsStruct);
 }
