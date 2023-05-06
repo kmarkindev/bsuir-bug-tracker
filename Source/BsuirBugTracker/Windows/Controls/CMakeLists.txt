@@ -6,4 +6,5 @@ target_sources(bsuir-bug-tracker-app PRIVATE
     Text.cpp
     TextInput.cpp
     Panel.cpp
+    ComboBox.cpp
 )

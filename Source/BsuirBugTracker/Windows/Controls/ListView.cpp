@@ -4,7 +4,7 @@
 
 DWORD ListView::GetDefaultStyles() const
 {
-	return WS_CHILD | LVS_REPORT | LVS_EDITLABELS;
+	return WS_CHILD | LVS_REPORT | LVS_EDITLABELS | WS_BORDER;
 }
 
 const wchar_t* ListView::GetWindowClassName() const

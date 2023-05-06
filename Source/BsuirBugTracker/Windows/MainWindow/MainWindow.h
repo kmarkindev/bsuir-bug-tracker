@@ -22,7 +22,7 @@ protected:
 
 	[[nodiscard]] const wchar_t* GetWindowClassName() const override;
 
-	DWORD GetDefaultStyles() const override;
+	[[nodiscard]] DWORD GetDefaultStyles() const override;
 
 	void RegisterWindowClass() override;
 
@@ -41,5 +41,7 @@ private:
 	TextInput TestTextInput {};
 
 	Panel TestPanel {};
+
+	ComboBox TestComboBox {};
 
 };

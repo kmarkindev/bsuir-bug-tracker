@@ -27,6 +27,8 @@ void MainWindow::BeginLifetime()
 
 	TestButton.SetOnClickCallback([this](Button& btn){
 		MessageBox(btn.GetHwnd(), L"Test button click", L"Button click", MB_OK);
+
+		TestComboBox.SetSelectedIndex(-1);
 	});
 
 	TestListView.Initialize(GetHInstance(), WindowInitializeParams{
@@ -69,6 +71,19 @@ void MainWindow::BeginLifetime()
 		.Height = 75,
 		.ParentWindow = this,
 	});
+
+	TestComboBox.Initialize(GetHInstance(), WindowInitializeParams {
+		.Name = L"Test Combo box",
+		.X = 20,
+		.Y = 600,
+		.Width = 250,
+		.Height = 150,
+		.ParentWindow = this,
+	});
+
+	TestComboBox.AddItem(L"Test 1");
+	TestComboBox.AddItem(L"Test 2");
+	TestComboBox.AddItem(L"ATest 3");
 }
 
 void MainWindow::EndLifetime()
@@ -80,6 +95,7 @@ void MainWindow::EndLifetime()
 	TestText.Destroy();
 	TestTextInput.Destroy();
 	TestPanel.Destroy();
+	TestComboBox.Destroy();
 }
 
 LRESULT MainWindow::WindowProcedure(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)

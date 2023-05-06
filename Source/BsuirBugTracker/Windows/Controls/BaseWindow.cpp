@@ -97,8 +97,6 @@ LRESULT BaseWindow::WindowProcedureEntry(HWND Hwnd, UINT UMsg, WPARAM WParam, LP
 
 		if (WindowInstance)
 			WindowInstance->HandleControlMessage(LOWORD(WParam));
-
-		return DefWindowProc(Hwnd, UMsg, WParam, LParam);
 	}
 
 	BaseWindow* WindowInstance = GetWindowInstance(Hwnd);
