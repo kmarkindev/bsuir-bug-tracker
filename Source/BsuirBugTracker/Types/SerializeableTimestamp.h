@@ -20,6 +20,15 @@ public:
 	{
 	}
 
+	static SerializeableTimePoint<Duration> GetCurrentTimestamp()
+	{
+		auto CurrentTime = std::chrono::system_clock::now();
+
+		return {
+			std::chrono::time_point_cast<std::chrono::seconds>(CurrentTime)
+		};
+	}
+
 	void Serialize(std::ostream& OutStream) const
 	{
 		auto ticks = this->time_since_epoch().count();

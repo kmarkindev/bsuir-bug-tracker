@@ -121,6 +121,10 @@ void BugViewPanel::BeginLifetime()
 		.ParentWindow = this
 	});
 
+	SaveChangesButton.GetOnButtonClicked().AddCallback([this](Button&) {
+		UpdateBug();
+	});
+
 	SetWindowVisibility(false);
 }
 
@@ -134,4 +138,31 @@ void BugViewPanel::EndLifetime()
 	BugNameTextInput.Destroy();
 	BugDescriptionTextInput.Destroy();
 	SaveChangesButton.Destroy();
+}
+
+void BugViewPanel::UpdateBug()
+{
+	if(!DisplayedBug)
+	{
+		assert(false);
+		return;
+	}
+
+	int SelectedBugStatusIndex = BugStatusComboBox.GetSelectedIndex();
+	if(SelectedBugStatusIndex < 0 || SelectedBugStatusIndex > 3)
+		SelectedBugStatusIndex = 0;
+
+	// We need to save values before updating
+	// because each update causes view panel redraw
+	// that leads to loosing entered values
+	// FIXME: add more events to Bug: one for each property
+	// and redraw only when updating one property
+	auto NewName = BugNameTextInput.GetText();
+	auto NewDescription = BugDescriptionTextInput.GetText();
+	auto NewStatus = static_cast<BugStatus>(SelectedBugStatusIndex);
+
+	DisplayedBug->SetUpdatedAt(Timestamp::GetCurrentTimestamp());
+	DisplayedBug->SetName(NewName);
+	DisplayedBug->SetDescription(NewDescription);
+	DisplayedBug->SetBugStatus(NewStatus);
 }

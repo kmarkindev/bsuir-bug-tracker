@@ -23,6 +23,8 @@ public:
 
 	Bug* GetBug() const;
 
+	void UpdateBug();
+
 protected:
 
 	void BeginLifetime() override;

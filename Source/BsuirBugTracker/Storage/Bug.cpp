@@ -155,6 +155,8 @@ BugStatus Bug::GetBugStatus() const
 void Bug::SetBugStatus(enum BugStatus InBugStatus)
 {
 	BugStatus = InBugStatus;
+
+	OnBugChanged.RaiseEvent(*this);
 }
 
 String Bug::GetBugStatusString(enum BugStatus StatusToConvert)
