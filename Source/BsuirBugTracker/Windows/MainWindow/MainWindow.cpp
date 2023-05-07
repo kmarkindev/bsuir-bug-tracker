@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 
 #include <Windows.h>
+#include <BsuirBugTracker/Utils/GuidGenerator.h>
 
 const wchar_t* MainWindow::GetWindowClassName() const
 {
@@ -26,7 +27,8 @@ void MainWindow::BeginLifetime()
 	});
 
 	TestButton.SetOnClickCallback([this](Button& btn){
-		MessageBox(nullptr, L"Btn press", L"Button click", MB_OK);
+		String Guid = GenerateGuid();
+		MessageBox(nullptr, Guid.c_str(), L"Button click", MB_OK);
 	});
 
 	TestListView.Initialize(GetHInstance(), WindowInitializeParams{
@@ -37,11 +39,18 @@ void MainWindow::BeginLifetime()
 		.ParentWindow = this,
 	});
 
-	static Bug TestBug {L"123-456-789"};
+	static Bug TestBug { GenerateGuid() };
 	TestBug.SetName(BSUIR_TEXT("Тестовое название бага"));
 	TestBug.SetUpdatedAt({ std::chrono::time_point_cast<std::chrono::seconds>(std::chrono::system_clock::now()) });
 
+	static Bug TestBug2 { GenerateGuid() };
+	TestBug2.SetName(BSUIR_TEXT("Еще один баг лол"));
+	auto time = std::chrono::time_point_cast<std::chrono::seconds>(std::chrono::system_clock::now());
+	time -= std::chrono::seconds { 30 };
+	TestBug2.SetUpdatedAt({ time });
+
 	TestListView.AddItem(0, &TestBug);
+	TestListView.AddItem(0, &TestBug2);
 
 	TestListView.SetSelectEventCallback([](int Index, Bug* Ptr){
 		MessageBox(nullptr, Ptr->GetGuid().c_str(), Ptr->GetName().c_str(), MB_OK);
