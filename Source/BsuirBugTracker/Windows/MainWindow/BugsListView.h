@@ -36,6 +36,8 @@ protected:
 
 private:
 
+	void FillItemWithData(int Index, Bug& Bug);
+
 	Event<int, Bug*> OnBugSelectionChange {};
 
 };

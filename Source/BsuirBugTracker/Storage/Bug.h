@@ -83,6 +83,8 @@ public:
 
 	static String GetBugStatusString(BugStatus StatusToConvert);
 
+	inline static Event<bool, Bug&> OnAnyBugChangedOrRemoved {};
+
 private:
 
 	String Guid {};

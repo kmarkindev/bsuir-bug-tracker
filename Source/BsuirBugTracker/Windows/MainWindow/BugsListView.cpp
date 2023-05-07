@@ -36,8 +36,7 @@ int BugsListView::AddItem(int InsertIndex, Bug* ItemPtr)
 
 	int Index = ListView::AddItem(InsertIndex, ItemPtr);
 
-	SetItemText(ItemPtr->GetName(), Index, 0);
-	SetItemText(TimestampToString(ItemPtr->GetUpdatedAt()), Index, 1);
+	FillItemWithData(Index, *ItemPtr);
 
 	return Index;
 }
@@ -48,9 +47,30 @@ void BugsListView::BeginLifetime()
 
 	AddColumn(0, BSUIR_TEXT("Название"), 350);
 	AddColumn(1, BSUIR_TEXT("Последнее изменение"), 150);
+
+	Bug::OnAnyBugChangedOrRemoved.AddCallback([this](bool wasChanged, Bug& Bug) {
+		int ItemIndex = FindItemIndexByPointer(&Bug);
+		if(ItemIndex == -1)
+			return;
+
+		if(wasChanged)
+		{
+			FillItemWithData(ItemIndex, Bug);
+		}
+		else
+		{
+			RemoveItem(ItemIndex);
+		}
+	});
 }
 
 Event<int, Bug*>& BugsListView::GetOnBugSelectionChange()
 {
 	return OnBugSelectionChange;
+}
+
+void BugsListView::FillItemWithData(int Index, Bug& Bug)
+{
+	SetItemText(Bug.GetName(), Index, 0);
+	SetItemText(TimestampToString(Bug.GetUpdatedAt()), Index, 1);
 }

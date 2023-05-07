@@ -10,6 +10,7 @@ void Bug::SetName(const String& name)
 	Name = name;
 
 	OnBugChanged.RaiseEvent(*this);
+	OnAnyBugChangedOrRemoved.RaiseEvent(true, *this);
 }
 
 const String& Bug::GetDescription() const
@@ -22,6 +23,7 @@ void Bug::SetDescription(const String& description)
 	Description = description;
 
 	OnBugChanged.RaiseEvent(*this);
+	OnAnyBugChangedOrRemoved.RaiseEvent(true, *this);
 }
 
 const Timestamp& Bug::GetCreatedAt() const
@@ -34,6 +36,7 @@ void Bug::SetCreatedAt(const Timestamp& createdAt)
 	CreatedAt = createdAt;
 
 	OnBugChanged.RaiseEvent(*this);
+	OnAnyBugChangedOrRemoved.RaiseEvent(true, *this);
 }
 
 const Timestamp& Bug::GetUpdatedAt() const
@@ -46,6 +49,7 @@ void Bug::SetUpdatedAt(const Timestamp& updatedAt)
 	UpdatedAt = updatedAt;
 
 	OnBugChanged.RaiseEvent(*this);
+	OnAnyBugChangedOrRemoved.RaiseEvent(true, *this);
 }
 
 const SerializeableList<Attachment>& Bug::GetAttachments() const
@@ -68,6 +72,7 @@ void Bug::RemoveAllAttachments()
 	Attachments.clear();
 
 	OnBugChanged.RaiseEvent(*this);
+	OnAnyBugChangedOrRemoved.RaiseEvent(true, *this);
 }
 
 void Bug::RemoveAttachment(const Attachment& Attachment)
@@ -81,6 +86,7 @@ void Bug::RemoveAttachment(const Attachment& Attachment)
 	}
 
 	OnBugChanged.RaiseEvent(*this);
+	OnAnyBugChangedOrRemoved.RaiseEvent(true, *this);
 }
 
 void Bug::Serialize(std::ostream& OutStream) const
@@ -105,6 +111,7 @@ void Bug::DeSerialize(std::istream& InStream)
 	Attachments.DeSerialize(InStream);
 
 	OnBugChanged.RaiseEvent(*this);
+	OnAnyBugChangedOrRemoved.RaiseEvent(true, *this);
 }
 
 bool Bug::operator==(const Bug& other) const noexcept
@@ -131,6 +138,7 @@ Bug::Bug(String Guid)
 void Bug::RemoveBug()
 {
 	OnBugRemoving.RaiseEvent(*this);
+	OnAnyBugChangedOrRemoved.RaiseEvent(false, *this);
 
 	RemoveAllAttachments();
 
@@ -157,6 +165,7 @@ void Bug::SetBugStatus(enum BugStatus InBugStatus)
 	BugStatus = InBugStatus;
 
 	OnBugChanged.RaiseEvent(*this);
+	OnAnyBugChangedOrRemoved.RaiseEvent(true, *this);
 }
 
 String Bug::GetBugStatusString(enum BugStatus StatusToConvert)

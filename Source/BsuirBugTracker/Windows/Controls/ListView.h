@@ -74,9 +74,10 @@ public:
 		return reinterpret_cast<ItemType*>(ItemInfo.lParam);
 	}
 
-	int FindItemIndex(ItemType* ItemPtr) const
+	int FindItemIndexByPointer(ItemType* ItemPtr) const
 	{
 		LVFINDINFO SearchInfo = {};
+		SearchInfo.flags = LVFI_PARAM;
 		SearchInfo.lParam = reinterpret_cast<LPARAM>(ItemPtr);
 
 		return ListView_FindItem(GetHwnd(), -1, &SearchInfo);
@@ -92,7 +93,7 @@ public:
 
 	void RemoveItem(ItemType* ItemPtr)
 	{
-		int IndexToRemove = FindItemIndex(ItemPtr);
+		int IndexToRemove = FindItemIndexByPointer(ItemPtr);
 
 		if(IndexToRemove == -1)
 		{
