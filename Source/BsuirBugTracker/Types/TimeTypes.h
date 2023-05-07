@@ -10,8 +10,10 @@ inline String TimestampToString(const Timestamp& Timestamp)
 	// FIXME: it works only if Timestamp has a second duration
 
 	std::chrono::sys_seconds SysTime = Timestamp;
+	std::chrono::zoned_time Zoned { std::chrono::current_zone(),  SysTime };
+	std::chrono::local_seconds LocalTime { Zoned };
 
-	auto Formatted = std::format(L"{0:%F} {0:%T}", SysTime);
+	auto Formatted = std::format(L"{0:%F} {0:%T}", LocalTime);
 
 	return { Formatted.c_str() };
 }
