@@ -1,9 +1,10 @@
 #pragma once
 
 #include "BsuirBugTracker/Types/SerializedDataTypes.h"
+#include <list>
 
 template<IsSerializeable T>
-class SerializeableList : public std::vector<T>
+class SerializeableList : public std::list<T>
 {
 public:
 
@@ -24,8 +25,6 @@ public:
 
 		std::uint64_t size {};
 		InStream.read(reinterpret_cast<char*>(&size), sizeof(size));
-
-		this->reserve(size);
 
 		// IDE says "Condition is always false" but it's false
 		while(size > 0)
