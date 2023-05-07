@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BsuirBugTracker/Windows/Controls/Controls.h"
+#include "BugsListView.h"
 
 class MainWindow : public Window
 {
@@ -36,7 +37,7 @@ private:
 
 	Text TestText {};
 
-	ListView TestListView {};
+	BugsListView TestListView {};
 
 	TextInput TestTextInput {};
 

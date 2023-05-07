@@ -93,10 +93,20 @@ LRESULT BaseWindow::WindowProcedureEntry(HWND Hwnd, UINT UMsg, WPARAM WParam, LP
 	// To process it in control class, not window class
 	if(UMsg == WM_COMMAND)
 	{
+		WORD NotificationCode = HIWORD(WParam);
 		BaseWindow* WindowInstance = GetWindowInstance(reinterpret_cast<HWND>(LParam));
 
 		if (WindowInstance)
-			WindowInstance->HandleControlMessage(LOWORD(WParam));
+			WindowInstance->HandleWMCommand(NotificationCode, WParam, LParam);
+	}
+
+	if(UMsg == WM_NOTIFY)
+	{
+		LPNMHDR NotifyInfo = reinterpret_cast<LPNMHDR>(LParam);
+		BaseWindow* WindowInstance = GetWindowInstance(NotifyInfo->hwndFrom);
+
+		if (WindowInstance)
+			WindowInstance->HandleWMNotify(NotifyInfo, WParam, LParam);
 	}
 
 	BaseWindow* WindowInstance = GetWindowInstance(Hwnd);
@@ -160,7 +170,12 @@ void BaseWindow::ReplaceDefaultWindowProcedureWithExisting()
 	SetWindowLongPtr(GetHwnd(), GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(BaseWindow::WindowProcedureEntry));
 }
 
-void BaseWindow::HandleControlMessage(WORD NotificationCode)
+void BaseWindow::HandleWMCommand(WORD NotificationCode, WPARAM WParam, LPARAM LParam)
+{
+
+}
+
+void BaseWindow::HandleWMNotify(LPNMHDR NotifyInfo, WPARAM WParam, LPARAM LParam)
 {
 
 }

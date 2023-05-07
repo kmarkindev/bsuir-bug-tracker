@@ -66,7 +66,9 @@ protected:
 
 	virtual void EndLifetime();
 
-	virtual void HandleControlMessage(WORD NotificationCode);
+	virtual void HandleWMCommand(WORD NotificationCode, WPARAM WParam, LPARAM LParam);
+
+	virtual void HandleWMNotify(LPNMHDR NotifyInfo, WPARAM WParam, LPARAM LParam);
 
 	static LRESULT CALLBACK WindowProcedureEntry(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam);
 

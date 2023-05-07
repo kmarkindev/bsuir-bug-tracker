@@ -25,7 +25,7 @@ public:
 
 protected:
 
-	void HandleControlMessage(WORD NotificationCode) override;
+	void HandleWMCommand(WORD NotificationCode, WPARAM WParam, LPARAM LParam) override;
 
 	void BeginLifetime() override;
 

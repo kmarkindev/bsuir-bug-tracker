@@ -28,9 +28,9 @@ void Button::BeginLifetime()
 	ReplaceDefaultWindowProcedureWithExisting();
 }
 
-void Button::HandleControlMessage(WORD NotificationCode)
+void Button::HandleWMCommand(WORD NotificationCode, WPARAM WParam, LPARAM LParam)
 {
-	BaseWindow::HandleControlMessage(NotificationCode);
+	BaseWindow::HandleWMCommand(NotificationCode, 0, 0);
 
 	if(NotificationCode == BN_CLICKED)
 	{
