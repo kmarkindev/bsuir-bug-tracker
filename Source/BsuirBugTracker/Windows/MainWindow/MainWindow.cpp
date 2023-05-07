@@ -1,7 +1,9 @@
 #include "MainWindow.h"
 
+#include <fstream>
 #include "Windows.h"
 #include "BsuirBugTracker/Utils/GuidGenerator.h"
+#include "BsuirBugTracker/Storage/StorageHelpers.h"
 
 const wchar_t* MainWindow::GetWindowClassName() const
 {
@@ -17,32 +19,38 @@ void MainWindow::BeginLifetime()
 {
 	BaseWindow::BeginLifetime();
 
-	// Test data
+	LoadStorage();
 
-	static Bug TestBug { GenerateGuid() };
-	TestBug.SetName(BSUIR_TEXT("Тестовое названиеgf s fgdsgfds sgdf gsrd sgrd rs srg rgs srg srg srg srg srg srg sr gsr gsrg sr g sgr srg sgr srg srg sgr srg srg srg  бага"));
-	TestBug.SetUpdatedAt({ std::chrono::time_point_cast<std::chrono::seconds>(std::chrono::system_clock::now()) });
+	// Initialize Create Bug Button
+	CreateBugButton.Initialize(GetHInstance(), WindowInitializeParams {
+		.Name = BSUIR_TEXT("Новый баг"),
+		.X = 5,
+		.Y = 570,
+		.Width = 290,
+		.Height = 50,
+		.ParentWindow = this,
+	});
 
-	static Bug TestBug2 { GenerateGuid() };
-	TestBug2.SetName(BSUIR_TEXT("Еще один баг лол"));
-	auto time = std::chrono::time_point_cast<std::chrono::seconds>(std::chrono::system_clock::now());
-	time -= std::chrono::seconds { 30 };
-	TestBug2.SetUpdatedAt({ time });
+	CreateBugButton.GetOnButtonClicked().AddCallback([this](Button&){
+		Bug& CreatedBug = Storage.AddBug(Bug { GenerateGuid() });
+
+		BugViewPanel.SetBug(&CreatedBug);
+	});
 
 	// Initialize Bug View Panel
 
 	BugViewPanel.Initialize(GetHInstance(), WindowInitializeParams {
-			.X = 720,
-			.Y = 20,
-			.Width = 450,
-			.Height = 600,
-			.ParentWindow = this,
+		.X = 820,
+		.Y = 20,
+		.Width = 450,
+		.Height = 600,
+		.ParentWindow = this,
 	});
 
 	// Initialize Bugs List View
 
 	BugsListView.Initialize(GetHInstance(), WindowInitializeParams{
-		.X = 200,
+		.X = 300,
 		.Y = 20,
 		.Width = 500,
 		.Height = 600,
@@ -52,11 +60,6 @@ void MainWindow::BeginLifetime()
 	BugsListView.GetOnBugSelectionChange().AddCallback([this](int Index, Bug* Ptr){
 		BugViewPanel.SetBug(Ptr);
 	});
-
-	// Test data
-
-	BugsListView.AddItem(0, &TestBug);
-	BugsListView.AddItem(0, &TestBug2);
 }
 
 void MainWindow::EndLifetime()
@@ -65,6 +68,9 @@ void MainWindow::EndLifetime()
 
 	BugsListView.Destroy();
 	BugViewPanel.Destroy();
+	CreateBugButton.Destroy();
+
+	SaveStorage();
 }
 
 LRESULT MainWindow::WindowProcedure(HWND InHwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
@@ -84,4 +90,45 @@ LRESULT MainWindow::WindowProcedure(HWND InHwnd, UINT UMsg, WPARAM WParam, LPARA
 DWORD MainWindow::GetDefaultStyles() const
 {
 	return WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX;
+}
+
+void MainWindow::LoadStorage()
+{
+	bool Error = false;
+	bool AssetExists = DoesAssetExist(L"Data", Error);
+
+	if(Error)
+	{
+		assert(false);
+		return;
+	}
+
+	if(!AssetExists)
+		return;
+
+	String StoragePath = GetAssetPath(L"Data", Error);
+
+	if(Error)
+	{
+		assert(false);
+		return;
+	}
+
+	std::ifstream IfStream(StoragePath.c_str());
+	Storage.DeSerialize(IfStream);
+}
+
+void MainWindow::SaveStorage()
+{
+	bool Error = false;
+	String StoragePath = GetAssetPath(L"Data", Error);
+
+	if(Error)
+	{
+		assert(false);
+		return;
+	}
+
+	std::ofstream OfStream(StoragePath.c_str(), std::ios::trunc);
+	Storage.Serialize(OfStream);
 }

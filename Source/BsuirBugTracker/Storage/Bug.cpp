@@ -132,7 +132,10 @@ bool Bug::IsValid() const
 Bug::Bug(String Guid)
 	: Guid(std::move(Guid))
 {
+	auto Now = Timestamp { std::chrono::time_point_cast<std::chrono::seconds>(std::chrono::system_clock::now()) };
 
+	CreatedAt = Now;
+	UpdatedAt = Now;
 }
 
 void Bug::RemoveBug()

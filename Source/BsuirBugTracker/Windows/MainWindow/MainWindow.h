@@ -3,6 +3,7 @@
 #include "BsuirBugTracker/Windows/Controls/Controls.h"
 #include "BugsListView.h"
 #include "BugViewPanel.h"
+#include "BsuirBugTracker/Storage/Storage.h"
 
 class MainWindow : public Window
 {
@@ -34,7 +35,15 @@ protected:
 
 	void EndLifetime() override;
 
+	void LoadStorage();
+
+	void SaveStorage();
+
 private:
+
+	Storage Storage {};
+
+	Button CreateBugButton {};
 
 	BugsListView BugsListView {};
 

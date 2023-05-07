@@ -15,11 +15,13 @@ const SerializeableList<Bug>& Storage::GetBugs() const
 	return Bugs;
 }
 
-void Storage::AddBug(Bug NewBug)
+Bug& Storage::AddBug(Bug NewBug)
 {
 	Bug& InsertedBug = Bugs.emplace_back(std::move(NewBug));
 
 	OnBugAddOrRemove.RaiseEvent(true, InsertedBug);
+
+	return InsertedBug;
 }
 
 void Storage::RemoveAllBugs()

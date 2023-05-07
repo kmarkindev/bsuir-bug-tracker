@@ -34,7 +34,7 @@ int WINAPI wWinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PWSTR PCmdLine
 	MainWindow MainWindow {};
 	MainWindow.Initialize(HInstance, WindowInitializeParams{
 		.Name = BSUIR_TEXT("Баг-трекер"),
-		.Width = 1200,
+		.Width = 1300,
 		.Height = 670
 	});
 

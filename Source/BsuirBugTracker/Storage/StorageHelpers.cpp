@@ -52,7 +52,7 @@ String GetStorageFolder(bool& error) noexcept
 	if(error)
 		return {};
 
-	folder += L"\\Storage";
+	//folder += L"\\Storage";
 
 	return folder;
 }

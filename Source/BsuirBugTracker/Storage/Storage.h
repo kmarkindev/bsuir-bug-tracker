@@ -11,7 +11,7 @@ public:
 
 	void DeSerialize(std::istream& InStream);
 
-	void AddBug(Bug NewBug);
+	Bug& AddBug(Bug NewBug);
 
 	void RemoveAllBugs();
 
