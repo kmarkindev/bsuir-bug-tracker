@@ -1,5 +1,6 @@
 #include "Attachment.h"
 
+#include <cassert>
 #include "StorageHelpers.h"
 
 Attachment::Attachment(String FilePath)
@@ -16,6 +17,8 @@ void Attachment::Serialize(std::ostream& OutStream) const
 void Attachment::DeSerialize(std::istream& InStream)
 {
 	FilePath.DeSerialize(InStream);
+
+	OnAttachmentChanged.RaiseEvent(*this);
 }
 
 bool Attachment::operator==(const Attachment& other) const noexcept
@@ -40,8 +43,10 @@ void Attachment::RemoveAttachment()
 
 	if(error)
 	{
-		// TODO: log error
+		assert(false);
 	}
+
+	OnAttachmentRemoving.RaiseEvent(*this);
 }
 
 bool Attachment::IsValid() const
@@ -54,8 +59,18 @@ bool Attachment::IsValid() const
 
 	if(error)
 	{
-		// TODO: log error
+		assert(false);
 	}
 
 	return !error && result;
+}
+
+Event<Attachment&>& Attachment::GetOnAttachmentRemoving()
+{
+	return OnAttachmentRemoving;
+}
+
+Event<Attachment&>& Attachment::GetOnAttachmentChanged()
+{
+	return OnAttachmentChanged;
 }

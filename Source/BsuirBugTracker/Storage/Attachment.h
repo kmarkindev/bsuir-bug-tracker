@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BsuirBugTracker/Types/Types.h"
+#include "BsuirBugTracker/Utils/Event.h"
 
 class Attachment
 {
@@ -37,9 +38,16 @@ public:
 
 	[[nodiscard]] bool IsValid() const;
 
+	[[nodiscard]] Event<Attachment&>& GetOnAttachmentChanged();
+
+	[[nodiscard]] Event<Attachment&>& GetOnAttachmentRemoving();
+
 private:
 
 	// Attachment file path relative to storage folder
 	String FilePath {};
 
+	Event<Attachment&> OnAttachmentChanged {};
+
+	Event<Attachment&> OnAttachmentRemoving {};
 };

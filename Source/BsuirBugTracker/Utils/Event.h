@@ -1,0 +1,67 @@
+#pragma once
+
+#include <functional>
+
+template<typename... Arguments>
+class Event
+{
+	using CallbackType = std::function<void(Arguments...)>;
+
+	struct SavedCallback
+	{
+		size_t id {};
+		CallbackType Callback {};
+
+		bool operator == (size_t IdToCheck)
+		{
+			return id == IdToCheck;
+		}
+	};
+
+public:
+
+	Event() = default;
+
+	Event(const Event&) = delete;
+
+	Event(Event&& Other) noexcept = default;
+
+	Event& operator=(const Event&) = delete;
+
+	Event& operator=(Event&& Other) noexcept = default;
+
+	~Event() = default;
+
+	size_t AddCallback(CallbackType Callback)
+	{
+		size_t Index = LastCallbackIndex++;
+
+		Callbacks.push_back({
+			Index,
+			std::move(Callback)
+		});
+
+		return Index;
+	}
+
+	void RemoveCallback(size_t Index)
+	{
+		auto RemoveIter = std::remove(Callbacks.begin(), Callbacks.end(), Index);
+		std::erase(RemoveIter, Callbacks.end());
+	}
+
+	void RaiseEvent(Arguments&& ... Args) const
+	{
+		for(const auto& SavedCallback : Callbacks)
+		{
+			SavedCallback.Callback(std::forward<Arguments>(Args)...);
+		}
+	}
+
+private:
+
+	size_t LastCallbackIndex {};
+
+	std::vector<SavedCallback> Callbacks {};
+
+};

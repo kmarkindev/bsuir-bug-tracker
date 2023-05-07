@@ -3,6 +3,7 @@
 #include "BsuirBugTracker/Types/Types.h"
 #include "BsuirBugTracker/Storage/Attachment.h"
 #include "BsuirBugTracker/Types/SerializeableList.h"
+#include "BsuirBugTracker/Utils/Event.h"
 
 class Bug
 {
@@ -64,6 +65,10 @@ public:
 	// Makes it not valid
 	void RemoveBug();
 
+	[[nodiscard]] Event<Bug&>& GetOnBugChanged();
+
+	[[nodiscard]] Event<Bug&>& GetOnBugRemoving();
+
 private:
 
 	String Guid {};
@@ -77,5 +82,9 @@ private:
 	Timestamp UpdatedAt {};
 
 	SerializeableList<Attachment> Attachments {};
+
+	Event<Bug&> OnBugChanged {};
+
+	Event<Bug&> OnBugRemoving {};
 
 };

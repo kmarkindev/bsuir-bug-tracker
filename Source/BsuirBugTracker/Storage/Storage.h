@@ -19,8 +19,12 @@ public:
 
 	[[nodiscard]] const SerializeableList<Bug>& GetBugs() const;
 
+	[[nodiscard]] Event<bool, Bug&>& GetOnBugAddOrRemove();
+
 private:
 
 	SerializeableList<Bug> Bugs;
+
+	Event<bool, Bug&> OnBugAddOrRemove {};
 
 };

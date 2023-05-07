@@ -8,6 +8,8 @@ const String& Bug::GetName() const
 void Bug::SetName(const String& name)
 {
 	Name = name;
+
+	OnBugChanged.RaiseEvent(*this);
 }
 
 const String& Bug::GetDescription() const
@@ -18,6 +20,8 @@ const String& Bug::GetDescription() const
 void Bug::SetDescription(const String& description)
 {
 	Description = description;
+
+	OnBugChanged.RaiseEvent(*this);
 }
 
 const Timestamp& Bug::GetCreatedAt() const
@@ -28,6 +32,8 @@ const Timestamp& Bug::GetCreatedAt() const
 void Bug::SetCreatedAt(const Timestamp& createdAt)
 {
 	CreatedAt = createdAt;
+
+	OnBugChanged.RaiseEvent(*this);
 }
 
 const Timestamp& Bug::GetUpdatedAt() const
@@ -38,6 +44,8 @@ const Timestamp& Bug::GetUpdatedAt() const
 void Bug::SetUpdatedAt(const Timestamp& updatedAt)
 {
 	UpdatedAt = updatedAt;
+
+	OnBugChanged.RaiseEvent(*this);
 }
 
 const SerializeableList<Attachment>& Bug::GetAttachments() const
@@ -58,6 +66,8 @@ void Bug::RemoveAllAttachments()
 	}
 
 	Attachments.clear();
+
+	OnBugChanged.RaiseEvent(*this);
 }
 
 void Bug::RemoveAttachment(const Attachment& Attachment)
@@ -69,6 +79,8 @@ void Bug::RemoveAttachment(const Attachment& Attachment)
 		iter->RemoveAttachment();
 		Attachments.erase(iter);
 	}
+
+	OnBugChanged.RaiseEvent(*this);
 }
 
 void Bug::Serialize(std::ostream& OutStream) const
@@ -89,6 +101,8 @@ void Bug::DeSerialize(std::istream& InStream)
 	CreatedAt.DeSerialize(InStream);
 	UpdatedAt.DeSerialize(InStream);
 	Attachments.DeSerialize(InStream);
+
+	OnBugChanged.RaiseEvent(*this);
 }
 
 bool Bug::operator==(const Bug& other) const noexcept
@@ -114,7 +128,19 @@ Bug::Bug(String Guid)
 
 void Bug::RemoveBug()
 {
+	OnBugRemoving.RaiseEvent(*this);
+
 	RemoveAllAttachments();
 
 	Guid.clear();
+}
+
+Event<Bug&>& Bug::GetOnBugChanged()
+{
+	return OnBugChanged;
+}
+
+Event<Bug&>& Bug::GetOnBugRemoving()
+{
+	return OnBugRemoving;
 }
