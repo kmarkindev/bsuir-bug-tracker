@@ -2,12 +2,13 @@
 
 #include "BsuirBugTracker/Windows/Controls/Controls.h"
 #include "BsuirBugTracker/Storage/Bug.h"
+#include "BsuirBugTracker/Storage/Storage.h"
 
 class BugViewPanel : public Panel
 {
 public:
 
-	BugViewPanel() = default;
+	explicit BugViewPanel(Storage* Storage);
 
 	BugViewPanel(const BugViewPanel&) = delete;
 
@@ -33,6 +34,8 @@ protected:
 
 private:
 
+	Storage* StoragePtr;
+
 	Bug* DisplayedBug {};
 
 	size_t OnBugChangedEventHandle {};
@@ -52,5 +55,7 @@ private:
 	TextInput BugDescriptionTextInput {};
 
 	Button SaveChangesButton {};
+
+	Button RemoveBugButton {};
 
 };

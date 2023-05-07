@@ -116,13 +116,44 @@ void BugViewPanel::BeginLifetime()
 		.Name = BSUIR_TEXT("Сохранить"),
 		.X = 5,
 		.Y = 540,
-		.Width = 435,
+		.Width = 215,
 		.Height = 50,
 		.ParentWindow = this
 	});
 
 	SaveChangesButton.GetOnButtonClicked().AddCallback([this](Button&) {
 		UpdateBug();
+	});
+
+	RemoveBugButton.Initialize(GetHInstance(), WindowInitializeParams {
+		.Name = BSUIR_TEXT("Удалить"),
+		.X = 225,
+		.Y = 540,
+		.Width = 215,
+		.Height = 50,
+		.ParentWindow = this
+	});
+
+	RemoveBugButton.GetOnButtonClicked().AddCallback([this](Button&){
+
+		if(!DisplayedBug)
+		{
+			assert(false);
+			return;
+		}
+
+		String Msg = BSUIR_TEXT("Подтвердите удаление бага нажав ОК");
+		String Capt = BSUIR_TEXT("Подтверждение удаления");
+		auto MsgResult = MessageBox(nullptr, Msg.c_str(), Capt.c_str(), MB_OKCANCEL);
+
+		if(MsgResult == IDOK)
+		{
+			Bug* ToRemove = DisplayedBug;
+
+			SetBug(nullptr);
+
+			StoragePtr->RemoveBug(*ToRemove);
+		}
 	});
 
 	SetWindowVisibility(false);
@@ -138,6 +169,7 @@ void BugViewPanel::EndLifetime()
 	BugNameTextInput.Destroy();
 	BugDescriptionTextInput.Destroy();
 	SaveChangesButton.Destroy();
+	RemoveBugButton.Destroy();
 }
 
 void BugViewPanel::UpdateBug()
@@ -165,4 +197,10 @@ void BugViewPanel::UpdateBug()
 	DisplayedBug->SetName(NewName);
 	DisplayedBug->SetDescription(NewDescription);
 	DisplayedBug->SetBugStatus(NewStatus);
+}
+
+BugViewPanel::BugViewPanel(Storage* Storage)
+	: StoragePtr(Storage)
+{
+
 }

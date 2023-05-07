@@ -47,6 +47,6 @@ private:
 
 	BugsListView BugsListView {};
 
-	BugViewPanel BugViewPanel {};
+	BugViewPanel BugViewPanel { &Storage };
 
 };

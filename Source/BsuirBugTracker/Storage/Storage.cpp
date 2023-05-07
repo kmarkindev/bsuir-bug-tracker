@@ -40,12 +40,16 @@ void Storage::RemoveBug(const Bug& Bug)
 {
 	auto iter = std::find(Bugs.begin(), Bugs.end(), Bug);
 
-	if(iter != Bugs.end())
+	if (iter != Bugs.end())
 	{
 		OnBugAddOrRemove.RaiseEvent(false, *iter);
 
 		iter->RemoveBug();
 		Bugs.erase(iter);
+	}
+	else
+	{
+		assert(false);
 	}
 }
 
