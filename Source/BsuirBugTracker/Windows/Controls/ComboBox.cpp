@@ -1,7 +1,7 @@
 #include "ComboBox.h"
 
 #include <CommCtrl.h>
-#include <string.h>
+#include <cstring>
 
 DWORD ComboBox::GetDefaultStyles() const
 {
@@ -31,7 +31,7 @@ void ComboBox::AddItem(StringView StringView)
 
 int ComboBox::GetSelectedIndex() const
 {
-	return SendMessage(GetHwnd(), CB_GETCURSEL, 0, 0);
+	return static_cast<int>(SendMessage(GetHwnd(), CB_GETCURSEL, 0, 0));
 }
 
 void ComboBox::SetSelectedIndex(int NewIndex)

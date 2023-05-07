@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BsuirBugTracker/Types/Types.h"
-#include <BsuirBugTracker/Storage/Attachment.h>
+#include "BsuirBugTracker/Storage/Attachment.h"
 #include "BsuirBugTracker/Types/SerializeableList.h"
 
 class Bug

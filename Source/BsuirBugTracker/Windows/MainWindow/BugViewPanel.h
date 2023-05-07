@@ -1,7 +1,7 @@
 #pragma once
 
-#include <BsuirBugTracker/Windows/Controls/Controls.h>
-#include <BsuirBugTracker/Storage/Bug.h>
+#include "BsuirBugTracker/Windows/Controls/Controls.h"
+#include "BsuirBugTracker/Storage/Bug.h"
 
 class BugViewPanel : public Panel
 {

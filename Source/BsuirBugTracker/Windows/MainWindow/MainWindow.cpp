@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 
-#include <Windows.h>
-#include <BsuirBugTracker/Utils/GuidGenerator.h>
+#include "Windows.h"
+#include "BsuirBugTracker/Utils/GuidGenerator.h"
 
 const wchar_t* MainWindow::GetWindowClassName() const
 {
@@ -61,7 +61,7 @@ void MainWindow::EndLifetime()
 	BugViewPanel.Destroy();
 }
 
-LRESULT MainWindow::WindowProcedure(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
+LRESULT MainWindow::WindowProcedure(HWND InHwnd, UINT UMsg, WPARAM WParam, LPARAM LParam)
 {
 	switch(UMsg)
 	{
@@ -72,7 +72,7 @@ LRESULT MainWindow::WindowProcedure(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM 
 		}
 	}
 
-	return Window::WindowProcedure(Hwnd, UMsg, WParam, LParam);
+	return Window::WindowProcedure(InHwnd, UMsg, WParam, LParam);
 }
 
 DWORD MainWindow::GetDefaultStyles() const

@@ -23,7 +23,7 @@ String TextInput::GetText() const
 	String Result(GetWindowTextLength(GetHwnd()), '\0');
 
 	// Add 1 to cover \0
-	GetWindowText(GetHwnd(), Result.data(), Result.size() + 1);
+	GetWindowText(GetHwnd(), Result.data(), static_cast<int>(Result.size() + 1));
 
 	return Result;
 }

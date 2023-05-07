@@ -1,8 +1,8 @@
 #pragma once
 
-#include <BsuirBugTracker/Types/Types.h>
 #include <combaseapi.h>
 #include <cassert>
+#include "BsuirBugTracker/Types/Types.h"
 
 inline String GenerateGuid()
 {

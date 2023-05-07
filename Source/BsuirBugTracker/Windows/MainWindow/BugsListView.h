@@ -1,8 +1,8 @@
 #pragma once
 
 #include <functional>
-#include <BsuirBugTracker/Windows/Controls/Controls.h>
-#include <BsuirBugTracker/Storage/Bug.h>
+#include "BsuirBugTracker/Windows/Controls/Controls.h"
+#include "BsuirBugTracker/Storage/Bug.h"
 
 class BugsListView : public ListView<Bug>
 {

@@ -18,9 +18,11 @@ public:
 
 	MainWindow& operator = (MainWindow&&) = default;
 
+	~MainWindow() = default;
+
 protected:
 
-	LRESULT WindowProcedure(HWND Hwnd, UINT UMsg, WPARAM WParam, LPARAM LParam) override;
+	LRESULT WindowProcedure(HWND InHwnd, UINT UMsg, WPARAM WParam, LPARAM LParam) override;
 
 	[[nodiscard]] const wchar_t* GetWindowClassName() const override;
 

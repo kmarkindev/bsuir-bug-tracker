@@ -33,7 +33,7 @@ public:
 
 	BaseWindow& operator = (BaseWindow&& other) noexcept;
 
-	~BaseWindow();
+	virtual ~BaseWindow();
 
 	void Initialize(HINSTANCE InHInstance, const WindowInitializeParams& Params);
 
@@ -79,12 +79,12 @@ protected:
 
 private:
 
-	bool WasInitialized = false;
-
 	HWND Hwnd {};
 
 	HINSTANCE HInstance {};
 
 	WNDPROC DefaultWindowProcedure = DefWindowProc;
+
+	bool WasInitialized = false;
 
 };

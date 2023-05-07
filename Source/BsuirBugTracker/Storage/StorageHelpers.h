@@ -1,6 +1,6 @@
 #pragma once
 
-#include <BsuirBugTracker/Types/Types.h>
+#include "BsuirBugTracker/Types/Types.h"
 
 String GetExecutablePath(bool& error) noexcept;
 

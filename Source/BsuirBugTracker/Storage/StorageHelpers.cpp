@@ -10,7 +10,7 @@ String GetExecutablePath(bool& error) noexcept
 
 	String result(MAX_PATH, L'\0');
 
-	int res = GetModuleFileName(nullptr, result.data(), result.size());
+	int res = GetModuleFileName(nullptr, result.data(), static_cast<DWORD>(result.size()));
 
 	if(res == 0)
 	{

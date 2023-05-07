@@ -1,7 +1,7 @@
 #include <Windows.h>
 #include <cassert>
-#include <BsuirBugTracker/Windows/MainWindow/MainWindow.h>
 #include <CommCtrl.h>
+#include "BsuirBugTracker/Windows/MainWindow/MainWindow.h"
 
 void RunMainLoop()
 {
