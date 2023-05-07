@@ -2,6 +2,7 @@
 
 #include "BsuirBugTracker/Windows/Controls/Controls.h"
 #include "BugsListView.h"
+#include "BugViewPanel.h"
 
 class MainWindow : public Window
 {
@@ -33,18 +34,8 @@ protected:
 
 private:
 
-	Button TestButton {};
+	BugsListView BugsListView {};
 
-	Text TestText {};
-
-	BugsListView TestListView {};
-
-	TextInput TestTextInput {};
-
-	Panel TestPanel {};
-
-	ComboBox TestComboBox {};
-
-	TimestampPicker TestTimestampPicker {};
+	BugViewPanel BugViewPanel {};
 
 };
