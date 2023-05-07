@@ -33,9 +33,9 @@ int WINAPI wWinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PWSTR PCmdLine
 
 	MainWindow MainWindow {};
 	MainWindow.Initialize(HInstance, WindowInitializeParams{
-		.Name = L"Main Window",
+		.Name = BSUIR_TEXT("Баг-трекер"),
 		.Width = 1200,
-		.Height = 800
+		.Height = 670
 	});
 
 	RunMainLoop();

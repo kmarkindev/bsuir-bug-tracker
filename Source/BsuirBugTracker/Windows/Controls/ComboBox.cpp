@@ -5,7 +5,7 @@
 
 DWORD ComboBox::GetDefaultStyles() const
 {
-	return WS_CHILD | CBS_SORT | WS_OVERLAPPED | CBS_HASSTRINGS | WS_BORDER | WS_TABSTOP | CBS_DROPDOWNLIST;
+	return WS_CHILD | WS_OVERLAPPED | CBS_HASSTRINGS | WS_BORDER | WS_TABSTOP | CBS_DROPDOWNLIST;
 }
 
 const wchar_t* ComboBox::GetWindowClassName() const

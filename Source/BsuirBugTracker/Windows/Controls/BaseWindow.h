@@ -42,7 +42,7 @@ public:
 
 	[[nodiscard]] bool IsValid() const;
 
-	void SetVindowVisibility(bool bShowWindow);
+	void SetWindowVisibility(bool bShowWindow);
 
 	[[nodiscard]] HWND GetHwnd() const;
 

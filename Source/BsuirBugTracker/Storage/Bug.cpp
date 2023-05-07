@@ -87,6 +87,7 @@ void Bug::Serialize(std::ostream& OutStream) const
 {
 	Guid.Serialize(OutStream);
 	Name.Serialize(OutStream);
+	SerializeInteger(OutStream, static_cast<std::int32_t>(BugStatus));
 	Description.Serialize(OutStream);
 	CreatedAt.Serialize(OutStream);
 	UpdatedAt.Serialize(OutStream);
@@ -97,6 +98,7 @@ void Bug::DeSerialize(std::istream& InStream)
 {
 	Guid.DeSerialize(InStream);
 	Name.DeSerialize(InStream);
+	BugStatus = static_cast<enum BugStatus>(DeSerializeInteger(InStream));
 	Description.DeSerialize(InStream);
 	CreatedAt.DeSerialize(InStream);
 	UpdatedAt.DeSerialize(InStream);
@@ -143,4 +145,32 @@ Event<Bug&>& Bug::GetOnBugChanged()
 Event<Bug&>& Bug::GetOnBugRemoving()
 {
 	return OnBugRemoving;
+}
+
+BugStatus Bug::GetBugStatus() const
+{
+	return BugStatus;
+}
+
+void Bug::SetBugStatus(enum BugStatus InBugStatus)
+{
+	BugStatus = InBugStatus;
+}
+
+String Bug::GetBugStatusString(enum BugStatus StatusToConvert)
+{
+	switch (StatusToConvert)
+	{
+	case BugStatus::Todo:
+		return BSUIR_TEXT("Ожидает исправления");
+	case BugStatus::InProgress:
+		return BSUIR_TEXT("В процессе исправления");
+	case BugStatus::InQa:
+		return BSUIR_TEXT("В процессе тестирования");
+	case BugStatus::Done:
+		return BSUIR_TEXT("Исправлено");
+	}
+
+	assert(false);
+	return {};
 }

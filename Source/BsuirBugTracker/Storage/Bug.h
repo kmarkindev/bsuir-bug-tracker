@@ -5,6 +5,14 @@
 #include "BsuirBugTracker/Types/SerializeableList.h"
 #include "BsuirBugTracker/Utils/Event.h"
 
+enum class BugStatus : std::int32_t
+{
+	Todo = 0,
+	InProgress,
+	InQa,
+	Done,
+};
+
 class Bug
 {
 
@@ -40,6 +48,10 @@ public:
 
 	[[nodiscard]] const Timestamp& GetCreatedAt() const;
 
+	[[nodiscard]] BugStatus GetBugStatus() const;
+
+	void SetBugStatus(BugStatus BugStatus);
+
 	void SetCreatedAt(const Timestamp& createdAt);
 
 	[[nodiscard]] const Timestamp& GetUpdatedAt() const;
@@ -69,9 +81,13 @@ public:
 
 	[[nodiscard]] Event<Bug&>& GetOnBugRemoving();
 
+	static String GetBugStatusString(BugStatus StatusToConvert);
+
 private:
 
 	String Guid {};
+
+	BugStatus BugStatus {};
 
 	String Name {};
 

@@ -64,6 +64,11 @@ public:
 	{
 	}
 
+	SerializeableStringView(const std::basic_string<T, std::char_traits<T>>& view)
+		: std::basic_string_view<T>(view)
+	{
+	}
+
 	void Serialize(std::ostream& OutStream) const
 	{
 

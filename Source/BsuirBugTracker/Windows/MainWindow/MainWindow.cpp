@@ -17,17 +17,7 @@ void MainWindow::BeginLifetime()
 {
 	BaseWindow::BeginLifetime();
 
-	// Initialize Bugs List View
-
-	BugsListView.Initialize(GetHInstance(), WindowInitializeParams{
-		.X = 200,
-		.Y = 20,
-		.Width = 500,
-		.Height = 600,
-		.ParentWindow = this,
-	});
-
-	// Temporary Test data
+	// Test data
 
 	static Bug TestBug { GenerateGuid() };
 	TestBug.SetName(BSUIR_TEXT("Тестовое названиеgf s fgdsgfds sgdf gsrd sgrd rs srg rgs srg srg srg srg srg srg sr gsr gsrg sr g sgr srg sgr srg srg sgr srg srg srg  бага"));
@@ -39,18 +29,34 @@ void MainWindow::BeginLifetime()
 	time -= std::chrono::seconds { 30 };
 	TestBug2.SetUpdatedAt({ time });
 
-	BugsListView.AddItem(0, &TestBug);
-	BugsListView.AddItem(0, &TestBug2);
-
 	// Initialize Bug View Panel
 
 	BugViewPanel.Initialize(GetHInstance(), WindowInitializeParams {
-		.X = 720,
+			.X = 720,
+			.Y = 20,
+			.Width = 450,
+			.Height = 600,
+			.ParentWindow = this,
+	});
+
+	// Initialize Bugs List View
+
+	BugsListView.Initialize(GetHInstance(), WindowInitializeParams{
+		.X = 200,
 		.Y = 20,
-		.Width = 450,
+		.Width = 500,
 		.Height = 600,
 		.ParentWindow = this,
 	});
+
+	BugsListView.GetOnBugSelectionChange().AddCallback([this](int Index, Bug* Ptr){
+		BugViewPanel.SetBug(Ptr);
+	});
+
+	// Test data
+
+	BugsListView.AddItem(0, &TestBug);
+	BugsListView.AddItem(0, &TestBug2);
 }
 
 void MainWindow::EndLifetime()

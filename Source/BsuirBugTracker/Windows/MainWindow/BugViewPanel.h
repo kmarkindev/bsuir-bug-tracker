@@ -23,8 +23,32 @@ public:
 
 	Bug* GetBug() const;
 
+protected:
+
+	void BeginLifetime() override;
+
+	void EndLifetime() override;
+
 private:
 
 	Bug* DisplayedBug {};
+
+	size_t OnBugChangedEventHandle {};
+
+	size_t OnBugRemovingEventHandle {};
+
+	void BindEventsToBug(Bug* OldBug, Bug* NewBug);
+
+	void DrawViewForBug(Bug* BugToDraw);
+
+	Text CreatedAtText {};
+	Text UpdatedAtText {};
+
+	ComboBox BugStatusComboBox {};
+
+	TextInput BugNameTextInput {};
+	TextInput BugDescriptionTextInput {};
+
+	Button SaveChangesButton {};
 
 };

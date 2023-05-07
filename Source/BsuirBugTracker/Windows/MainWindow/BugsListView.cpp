@@ -49,3 +49,8 @@ void BugsListView::BeginLifetime()
 	AddColumn(0, BSUIR_TEXT("Название"), 350);
 	AddColumn(1, BSUIR_TEXT("Последнее изменение"), 150);
 }
+
+Event<int, Bug*>& BugsListView::GetOnBugSelectionChange()
+{
+	return OnBugSelectionChange;
+}

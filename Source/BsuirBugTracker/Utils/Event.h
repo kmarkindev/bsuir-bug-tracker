@@ -48,7 +48,7 @@ public:
 	void RemoveCallback(size_t Index)
 	{
 		auto RemoveIter = std::remove(Callbacks.begin(), Callbacks.end(), Index);
-		std::erase(RemoveIter, Callbacks.end());
+		Callbacks.erase(RemoveIter, Callbacks.end());
 	}
 
 	void RaiseEvent(Arguments ... Args) const
@@ -68,7 +68,8 @@ public:
 
 private:
 
-	size_t LastCallbackIndex {};
+	// start counting from 1 to allow to do null checks based on zero value
+	size_t LastCallbackIndex { 1 };
 
 	std::vector<SavedCallback> Callbacks {};
 

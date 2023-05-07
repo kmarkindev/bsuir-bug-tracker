@@ -21,6 +21,8 @@ public:
 
 	int AddItem(int InsertIndex, Bug* ItemPtr) override;
 
+	Event<int, Bug*>& GetOnBugSelectionChange();
+
 protected:
 
 	void BeginLifetime() override;

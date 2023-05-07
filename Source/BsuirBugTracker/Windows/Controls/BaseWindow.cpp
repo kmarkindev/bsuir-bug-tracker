@@ -55,7 +55,7 @@ bool BaseWindow::IsValid() const
 	return WasInitialized && HInstance && Hwnd;
 }
 
-void BaseWindow::SetVindowVisibility(bool bShowWindow)
+void BaseWindow::SetWindowVisibility(bool bShowWindow)
 {
 	ShowWindow(Hwnd, bShowWindow ? SW_SHOW : SW_HIDE);
 }
