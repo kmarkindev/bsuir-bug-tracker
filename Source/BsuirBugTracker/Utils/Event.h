@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <cassert>
 
 template<typename... Arguments>
 class Event
@@ -50,11 +51,18 @@ public:
 		std::erase(RemoveIter, Callbacks.end());
 	}
 
-	void RaiseEvent(Arguments&& ... Args) const
+	void RaiseEvent(Arguments ... Args) const
 	{
 		for(const auto& SavedCallback : Callbacks)
 		{
-			SavedCallback.Callback(std::forward<Arguments>(Args)...);
+			if(SavedCallback.Callback)
+			{
+				SavedCallback.Callback(Args...);
+			}
+			else
+			{
+				assert(false);
+			}
 		}
 	}
 

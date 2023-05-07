@@ -2,17 +2,6 @@
 
 #include <CommCtrl.h>
 
-void Button::RaiseClickEvent()
-{
-	if(Callback)
-		Callback(*this);
-}
-
-void Button::SetOnClickCallback(std::function<void(Button&)> NewCallback)
-{
-	Callback = std::move(NewCallback);
-}
-
 const wchar_t* Button::GetWindowClassName() const
 {
 	return WC_BUTTON;
@@ -34,6 +23,11 @@ void Button::HandleWMCommand(WORD NotificationCode, WPARAM WParam, LPARAM LParam
 
 	if(NotificationCode == BN_CLICKED)
 	{
-		RaiseClickEvent();
+		OnButtonClicked.RaiseEvent(*this);
 	}
+}
+
+Event<Button&>& Button::GetOnButtonClicked()
+{
+	return OnButtonClicked;
 }

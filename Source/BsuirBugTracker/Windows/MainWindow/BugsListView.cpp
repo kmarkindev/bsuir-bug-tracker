@@ -4,7 +4,7 @@ void BugsListView::HandleWMNotify(LPNMHDR NotifyInfo, WPARAM WParam, LPARAM LPar
 {
 	BaseWindow::HandleWMNotify(NotifyInfo, WParam, LParam);
 
-	if(NotifyInfo->code == LVN_ITEMACTIVATE && Callback)
+	if(NotifyInfo->code == LVN_ITEMACTIVATE)
 	{
 		int SelectedIndex = ListView_GetNextItem(GetHwnd(), -1, LVNI_SELECTED);
 
@@ -22,13 +22,8 @@ void BugsListView::HandleWMNotify(LPNMHDR NotifyInfo, WPARAM WParam, LPARAM LPar
 			return;
 		}
 
-		Callback(SelectedIndex, SelectedBugPtr);
+		OnBugSelectionChange.RaiseEvent(SelectedIndex, SelectedBugPtr);
 	}
-}
-
-void BugsListView::SetSelectEventCallback(std::function<void(int, Bug*)> NewCallback)
-{
-	Callback = std::move(NewCallback);
 }
 
 int BugsListView::AddItem(int InsertIndex, Bug* ItemPtr)

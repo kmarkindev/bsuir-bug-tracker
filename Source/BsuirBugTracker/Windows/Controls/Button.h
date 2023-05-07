@@ -4,6 +4,7 @@
 #include "BsuirBugTracker/Types/Types.h"
 #include "BaseWindow.h"
 #include <functional>
+#include "BsuirBugTracker/Utils/Event.h"
 
 class Button : public BaseWindow
 {
@@ -19,9 +20,7 @@ public:
 
 	Button& operator = (Button&& Other) noexcept = default;
 
-	void SetOnClickCallback(std::function<void(Button&)> NewCallback);
-
-	void RaiseClickEvent();
+	Event<Button&>& GetOnButtonClicked();
 
 protected:
 
@@ -35,5 +34,5 @@ protected:
 
 private:
 
-	std::function<void(Button&)> Callback {};
+	Event<Button&> OnButtonClicked {};
 };

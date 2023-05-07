@@ -3,6 +3,7 @@
 #include <functional>
 #include "BsuirBugTracker/Windows/Controls/Controls.h"
 #include "BsuirBugTracker/Storage/Bug.h"
+#include "BsuirBugTracker/Utils/Event.h"
 
 class BugsListView : public ListView<Bug>
 {
@@ -17,8 +18,6 @@ public:
 	BugsListView& operator = (const BugsListView&) = delete;
 
 	BugsListView& operator = (BugsListView&& Other) noexcept = default;
-
-	void SetSelectEventCallback(std::function<void(int SelectedIndex, Bug* BugPtr)> NewCallback);
 
 	int AddItem(int InsertIndex, Bug* ItemPtr) override;
 
@@ -35,6 +34,6 @@ protected:
 
 private:
 
-	std::function<void(int SelectedIndex, Bug* BugPtr)> Callback;
+	Event<int, Bug*> OnBugSelectionChange {};
 
 };
