@@ -67,6 +67,7 @@ void BaseWindow::RegisterWindowClassHelper()
 	WindowClass.hInstance = HInstance;
 	WindowClass.lpszClassName = GetWindowClassName();
 	WindowClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	WindowClass.hIcon = LoadIcon(GetHInstance(), MAKEINTRESOURCE(1));
 
 	RegisterClass(&WindowClass);
 }

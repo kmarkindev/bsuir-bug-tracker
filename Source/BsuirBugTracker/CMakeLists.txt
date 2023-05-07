@@ -22,7 +22,10 @@ target_compile_options(bsuir-bug-tracker-app PRIVATE /W4 /WX /wo4265 /wd4100)
 target_include_directories(bsuir-bug-tracker-app PRIVATE ..)
 target_link_libraries(bsuir-bug-tracker-app PRIVATE Shlwapi Comctl32.dll)
 
-target_sources(bsuir-bug-tracker-app PRIVATE bsuir-bug-tracker.manifest)
+target_sources(bsuir-bug-tracker-app PRIVATE
+    bsuir-bug-tracker.manifest
+    bsuir-bug-tracker.rc
+)
 
 add_subdirectory(Types)
 add_subdirectory(Main)
