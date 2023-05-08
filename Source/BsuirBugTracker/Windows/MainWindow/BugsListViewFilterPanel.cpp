@@ -150,7 +150,7 @@ void BugsListViewFilterPanel::BeginLifetime()
 	ApplyFilterButton.Initialize(GetHInstance(), WindowInitializeParams {
 		.Name = BSUIR_TEXT("Применить"),
 		.X = 5,
-		.Y = 478,
+		.Y = 318,
 		.Width = 280,
 		.Height = 55,
 		.ParentWindow = this,

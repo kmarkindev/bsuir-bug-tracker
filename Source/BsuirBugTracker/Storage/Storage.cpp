@@ -2,7 +2,25 @@
 
 void Storage::DeSerialize(std::istream& InStream)
 {
+	// DeSerialize removes all bugs and creates new ones
+	// but we still need to follow bugs lifecycle, so
+	// raise all events and call all lifecycle methods
+
+	// Call events before actually deleting bugs
+	for(auto& Bug : Bugs)
+	{
+		OnBugAddOrRemove.RaiseEvent(false, Bug);
+
+		Bug.RemoveBug();
+	}
+
 	Bugs.DeSerialize(InStream);
+
+	// Call events after bugs creation
+	for(auto& NewBug : Bugs)
+	{
+		OnBugAddOrRemove.RaiseEvent(true, NewBug);
+	}
 }
 
 void Storage::Serialize(std::ostream& OutStream) const

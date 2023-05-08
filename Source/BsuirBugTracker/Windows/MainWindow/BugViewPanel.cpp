@@ -39,7 +39,7 @@ void BugViewPanel::BindEventsToBug(Bug* OldBug, Bug* NewBug)
 		});
 
 		OnBugRemovingEventHandle = NewBug->GetOnBugRemoving().AddCallback([this](Bug& Bug){
-			DrawViewForBug(nullptr);
+			SetBug(nullptr);
 		});
 	}
 }

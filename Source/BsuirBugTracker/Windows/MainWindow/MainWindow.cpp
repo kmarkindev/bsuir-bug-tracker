@@ -67,8 +67,76 @@ void MainWindow::BeginLifetime()
 		.X = 5,
 		.Y = 20,
 		.Width = 290,
-		.Height = 540,
+		.Height = 380,
 		.ParentWindow = this,
+	});
+
+	ImportButton.Initialize(GetHInstance(), WindowInitializeParams{
+		.Name = BSUIR_TEXT("Импортировать данные"),
+		.X = 5,
+		.Y = 430,
+		.Width = 290,
+		.Height = 50,
+		.ParentWindow = this,
+	});
+	ImportButton.GetOnButtonClicked().AddCallback([this](Button&){
+		String Msg = BSUIR_TEXT("Импорт заменит все текущие данные на новые. Нажмите ОК если согласны продолжить");
+		String Capt = BSUIR_TEXT("Подтверждение импорта");
+		auto MsgResult = MessageBox(GetHwnd(), Msg.c_str(), Capt.c_str(), MB_OKCANCEL);
+
+		if (MsgResult == IDOK)
+		{
+			wchar_t FilePathBuffer[512] { '\0' };
+
+			OPENFILENAME OpenFileInfo = {};
+			OpenFileInfo.lStructSize = sizeof(OPENFILENAME);
+			OpenFileInfo.hwndOwner = GetHwnd();
+			OpenFileInfo.hInstance = GetHInstance();
+			OpenFileInfo.lpstrFilter = L"Bug Tracker Data\0*.BugTrackerData\0\0";
+			OpenFileInfo.lpstrFile = FilePathBuffer;
+			OpenFileInfo.nMaxFile = sizeof(FilePathBuffer);
+			OpenFileInfo.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+			BOOL Result = GetOpenFileName(&OpenFileInfo);
+
+			if(Result == FALSE)
+				return;
+
+			StringView Path = FilePathBuffer;
+			std::ifstream ifstream(Path.data());
+			Storage.DeSerialize(ifstream);
+		}
+	});
+
+	ExportButton.Initialize(GetHInstance(), WindowInitializeParams{
+		.Name = BSUIR_TEXT("Экспортировать данные"),
+		.X = 5,
+		.Y = 480,
+		.Width = 290,
+		.Height = 50,
+		.ParentWindow = this,
+	});
+	ExportButton.GetOnButtonClicked().AddCallback([this](Button&){
+
+		wchar_t FilePathBuffer[512] { '\0' };
+
+		OPENFILENAME OpenFileInfo = {};
+		OpenFileInfo.lStructSize = sizeof(OPENFILENAME);
+		OpenFileInfo.hwndOwner = GetHwnd();
+		OpenFileInfo.hInstance = GetHInstance();
+		OpenFileInfo.lpstrFilter = L"Bug Tracker Data\0*.BugTrackerData\0\0";
+		OpenFileInfo.lpstrFile = FilePathBuffer;
+		OpenFileInfo.nMaxFile = sizeof(FilePathBuffer);
+		OpenFileInfo.Flags = OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT;
+
+		BOOL Result = GetSaveFileName(&OpenFileInfo);
+
+		if(Result == FALSE)
+			return;
+
+		StringView Path = FilePathBuffer;
+		std::ofstream ofstream(Path.data());
+		Storage.Serialize(ofstream);
 	});
 }
 
@@ -80,6 +148,8 @@ void MainWindow::EndLifetime()
 	BugViewPanel.Destroy();
 	CreateBugButton.Destroy();
 	BugsFilterPanel.Destroy();
+	ImportButton.Destroy();
+	ExportButton.Destroy();
 
 	SaveStorage();
 }

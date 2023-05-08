@@ -52,4 +52,7 @@ private:
 
 	BugsListViewFilterPanel BugsFilterPanel { &BugsListView, &Storage };
 
+	Button ExportButton {};
+
+	Button ImportButton {};
 };

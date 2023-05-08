@@ -104,10 +104,14 @@ LRESULT BaseWindow::WindowProcedureEntry(HWND Hwnd, UINT UMsg, WPARAM WParam, LP
 	if(UMsg == WM_NOTIFY)
 	{
 		LPNMHDR NotifyInfo = reinterpret_cast<LPNMHDR>(LParam);
-		BaseWindow* WindowInstance = GetWindowInstance(NotifyInfo->hwndFrom);
 
-		if (WindowInstance)
-			WindowInstance->HandleWMNotify(NotifyInfo, WParam, LParam);
+		if(NotifyInfo->hwndFrom != nullptr)
+		{
+			BaseWindow* WindowInstance = GetWindowInstance(NotifyInfo->hwndFrom);
+
+			if (WindowInstance)
+				WindowInstance->HandleWMNotify(NotifyInfo, WParam, LParam);
+		}
 	}
 
 	BaseWindow* WindowInstance = GetWindowInstance(Hwnd);
