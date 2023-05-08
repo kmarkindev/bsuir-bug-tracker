@@ -26,7 +26,7 @@ void BugsListView::HandleWMNotify(LPNMHDR NotifyInfo, WPARAM WParam, LPARAM LPar
 	}
 }
 
-int BugsListView::AddItem(int InsertIndex, Bug* ItemPtr)
+int BugsListView::AddItem(int InsertIndex, const Bug* ItemPtr)
 {
 	if(!ItemPtr)
 	{
@@ -69,7 +69,7 @@ Event<int, Bug*>& BugsListView::GetOnBugSelectionChange()
 	return OnBugSelectionChange;
 }
 
-void BugsListView::FillItemWithData(int Index, Bug& Bug)
+void BugsListView::FillItemWithData(int Index, const Bug& Bug)
 {
 	SetItemText(Bug.GetName(), Index, 0);
 	SetItemText(TimestampToString(Bug.GetUpdatedAt()), Index, 1);

@@ -43,7 +43,7 @@ public:
 	}
 
 	// ListView user is responsible to manage ItemPtr
-	virtual int AddItem(int InsertIndex, ItemType* ItemPtr)
+	virtual int AddItem(int InsertIndex, const ItemType* ItemPtr)
 	{
 		LVITEM ItemInfo {};
 		ItemInfo.mask = LVIF_PARAM;
@@ -74,7 +74,7 @@ public:
 		return reinterpret_cast<ItemType*>(ItemInfo.lParam);
 	}
 
-	int FindItemIndexByPointer(ItemType* ItemPtr) const
+	int FindItemIndexByPointer(const ItemType* ItemPtr) const
 	{
 		LVFINDINFO SearchInfo = {};
 		SearchInfo.flags = LVFI_PARAM;
@@ -91,7 +91,7 @@ public:
 		}
 	}
 
-	void RemoveItem(ItemType* ItemPtr)
+	void RemoveItem(const ItemType* ItemPtr)
 	{
 		int IndexToRemove = FindItemIndexByPointer(ItemPtr);
 
@@ -103,6 +103,11 @@ public:
 
 		auto Result = ListView_DeleteColumn(GetHwnd(), IndexToRemove);
 		assert(Result != -1);
+	}
+
+	void RemoveAllItems()
+	{
+		ListView_DeleteAllItems(GetHwnd());
 	}
 
 	void SetItemText(StringView Text, int ItemIndex, int ColumnIndex)

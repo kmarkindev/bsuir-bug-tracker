@@ -59,3 +59,8 @@ Timestamp TimestampPicker::GetTime() const
 
 	return { ZonedSeconds.get_sys_time() };
 }
+
+void TimestampPicker::ClearValue()
+{
+	DateTime_SetSystemtime(GetHwnd(), GDT_NONE, 0);
+}

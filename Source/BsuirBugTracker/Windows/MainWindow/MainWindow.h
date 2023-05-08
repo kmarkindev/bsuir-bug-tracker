@@ -3,6 +3,7 @@
 #include "BsuirBugTracker/Windows/Controls/Controls.h"
 #include "BugsListView.h"
 #include "BugViewPanel.h"
+#include "BugsListViewFilterPanel.h"
 #include "BsuirBugTracker/Storage/Storage.h"
 
 class MainWindow : public Window
@@ -48,5 +49,7 @@ private:
 	BugsListView BugsListView {};
 
 	BugViewPanel BugViewPanel { &Storage };
+
+	BugsListViewFilterPanel BugsFilterPanel { &BugsListView, &Storage };
 
 };

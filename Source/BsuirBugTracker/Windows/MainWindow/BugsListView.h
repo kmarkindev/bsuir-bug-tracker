@@ -19,7 +19,7 @@ public:
 
 	BugsListView& operator = (BugsListView&& Other) noexcept = default;
 
-	int AddItem(int InsertIndex, Bug* ItemPtr) override;
+	int AddItem(int InsertIndex, const Bug* ItemPtr) override;
 
 	Event<int, Bug*>& GetOnBugSelectionChange();
 
@@ -36,7 +36,7 @@ protected:
 
 private:
 
-	void FillItemWithData(int Index, Bug& Bug);
+	void FillItemWithData(int Index, const Bug& Bug);
 
 	Event<int, Bug*> OnBugSelectionChange {};
 

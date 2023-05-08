@@ -144,7 +144,7 @@ void BugViewPanel::BeginLifetime()
 
 		String Msg = BSUIR_TEXT("Подтвердите удаление бага нажав ОК");
 		String Capt = BSUIR_TEXT("Подтверждение удаления");
-		auto MsgResult = MessageBox(nullptr, Msg.c_str(), Capt.c_str(), MB_OKCANCEL);
+		auto MsgResult = MessageBox(GetHwnd(), Msg.c_str(), Capt.c_str(), MB_OKCANCEL);
 
 		if(MsgResult == IDOK)
 		{

@@ -50,7 +50,7 @@ void MainWindow::BeginLifetime()
 	// Initialize Bugs List View
 
 	BugsListView.Initialize(GetHInstance(), WindowInitializeParams{
-		.X = 300,
+		.X = 308,
 		.Y = 20,
 		.Width = 500,
 		.Height = 600,
@@ -59,6 +59,16 @@ void MainWindow::BeginLifetime()
 
 	BugsListView.GetOnBugSelectionChange().AddCallback([this](int Index, Bug* Ptr){
 		BugViewPanel.SetBug(Ptr);
+	});
+
+	// Initialize Bugs ListView Filter
+
+	BugsFilterPanel.Initialize(GetHInstance(), WindowInitializeParams{
+		.X = 5,
+		.Y = 20,
+		.Width = 290,
+		.Height = 540,
+		.ParentWindow = this,
 	});
 }
 
@@ -69,6 +79,7 @@ void MainWindow::EndLifetime()
 	BugsListView.Destroy();
 	BugViewPanel.Destroy();
 	CreateBugButton.Destroy();
+	BugsFilterPanel.Destroy();
 
 	SaveStorage();
 }

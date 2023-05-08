@@ -18,6 +18,8 @@ public:
 
 	[[nodiscard]] bool HasSelectedTime() const;
 
+	void ClearValue();
+
 	[[nodiscard]] Timestamp GetTime() const;
 
 protected:
