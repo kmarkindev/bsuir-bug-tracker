@@ -40,7 +40,7 @@ public:
 		std::int64_t size {};
 		InStream.read(reinterpret_cast<char*>(&size), sizeof(size));
 
-		this->resize(size);
+		this->resize(static_cast<unsigned>(size));
 
 		InStream.read(reinterpret_cast<char*>(this->data()), size * sizeof(T));
 	}
