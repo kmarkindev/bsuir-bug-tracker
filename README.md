@@ -6,4 +6,4 @@ It supports import & export of data, built from scratch using Win32 API without 
 
 Note: UI is in Russian, but sources are completly in English.
 
-![3](https://github.com/kmarkindev/bsuir-bug-tracker/assets/43731478/a14e9839-c47a-403e-90e9-6ac11ff72538)
+![3](https://github.com/kmarkindev/bsuir-bug-tracker/assets/43731478/b0eb88a2-b95a-4d57-9246-08c9816b1960)
